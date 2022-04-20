@@ -1,0 +1,99 @@
+kind: pipeline
+name: build
+
+type : docker
+steps:
+
+  - name: test
+    image: maven:3-jdk-11
+    environment :
+      DATASOURCE_DRIVER: org.postgresql.Driver
+      DATASOURCE_URL: jdbc:postgresql://db:5432/crudrest
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+      SONAR_HOST :
+        from_secret : SONAR_HOST
+      SONAR_TOKEN :
+        from_secret : SONAR_TOKEN
+    commands:
+      - mvn test -P default -B -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -Dcheckstyle.skip=true -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn -X org.jacoco:jacoco-maven-plugin:report org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN  -Dsonar.projectKey=ujar-org:sample-crud-rest -Dsonar.projectName=ujar-org:sample-crud-rest --batch-mode --file pom.xml -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    when:
+      branch:
+        include:
+          - feature/*
+          - main
+      event:
+        include:
+          - push
+          - pull_request
+
+  - name: publish-snapshot-package
+    depends_on :
+      - test
+    image: maven:3-jdk-11
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands:
+      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    when:
+      branch:
+        include:
+          - feature/*
+          - main
+      event:
+        include:
+          - push
+          - pull_request
+
+  - name: publish-release-package
+    depends_on :
+      - test
+    image: maven:3-jdk-11
+    environment :
+      DEPLOYER_USERNAME :
+        from_secret : DEPLOYER_USERNAME
+      DEPLOYER_PASSWORD :
+        from_secret : DEPLOYER_PASSWORD
+    commands:
+      - mvn deploy -DskipTests=true -Dcheckstyle.skip=true -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+    when:
+      event: tag
+
+  - name: docker-build-dev-image
+    depends_on :
+      - publish-snapshot-package
+    image: plugins/docker
+    settings:
+      storage_driver: vfs
+      username:
+        from_secret: DOCKER_USERNAME
+      password:
+        from_secret: DOCKER_PASSWORD
+      repo: docker-registry.ujar.org/ujar/sample-crud-rest
+      registry: docker-registry.ujar.org
+      tags :
+        - latest
+    when:
+      branch:
+        include:
+          - feature/*
+          - main
+      event:
+        include:
+          - push
+          - pull_request
+
+services:
+  - name: db
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: crudrest
