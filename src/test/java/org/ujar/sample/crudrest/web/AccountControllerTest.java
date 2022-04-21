@@ -1,5 +1,9 @@
 package org.ujar.sample.crudrest.web;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.google.gson.Gson;
@@ -7,8 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.ujar.sample.crudrest.entity.Account;
 
@@ -94,9 +96,9 @@ public class AccountControllerTest {
     }.getType());
 
     for (Account singleAccount : allAccounts) {
-      Assert.assertNotNull(singleAccount);
-      Assert.assertNotNull(singleAccount.getId());
-      Assert.assertNotNull(singleAccount.getName());
+      assertNotNull(singleAccount);
+      assertNotNull(singleAccount.getId());
+      assertNotNull(singleAccount.getName());
     }
 
     for (Account singleAccount : createdAccounts) {
@@ -126,8 +128,8 @@ public class AccountControllerTest {
     var responseBody = createNewAccount(account);
 
     deleteAccount(responseBody.getId());
-    responseBody = getAccountById(responseBody.getId(), status().isNotFound());
-    Assert.assertNull(responseBody.getId());
+    responseBody = getAccountById(responseBody.getId());
+    assertNull(responseBody);
   }
 
   private Account createNewAccount(Account account) throws Exception {
@@ -144,15 +146,11 @@ public class AccountControllerTest {
   }
 
   private Account getAccountById(int id) throws Exception {
-    return getAccountById(id, status().isOk());
-  }
-
-  private Account getAccountById(int id, ResultMatcher resultMatcher) throws Exception {
     var gson = new Gson();
 
     var result = mvc.perform(MockMvcRequestBuilders.get("/account/" + id)
         .accept(MediaType.APPLICATION_JSON))
-        .andExpect(resultMatcher)
+        .andExpect(status().isOk())
         .andReturn();
 
     return gson.fromJson(result.getResponse().getContentAsString(), Account.class);
@@ -166,11 +164,11 @@ public class AccountControllerTest {
   }
 
   private void assertAccountEquals(Account account, Account responseBody) {
-    Assert.assertNotNull(responseBody);
-    Assert.assertNotNull(responseBody.getId());
-    Assert.assertNotNull(responseBody.getName());
-    Assert.assertEquals(responseBody.getName(), account.getName());
-    Assert.assertEquals(responseBody.isActive(), account.isActive());
+    assertNotNull(responseBody);
+    assertNotNull(responseBody.getId());
+    assertNotNull(responseBody.getName());
+    assertEquals(responseBody.getName(), account.getName());
+    assertEquals(responseBody.isActive(), account.isActive());
   }
 
 }

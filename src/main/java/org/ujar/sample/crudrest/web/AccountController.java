@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.ujar.sample.crudrest.entity.Account;
-import org.ujar.sample.crudrest.exception.EntityNotFoundException;
 import org.ujar.sample.crudrest.repository.AccountRepository;
 
 @RestController
@@ -29,14 +28,12 @@ public class AccountController {
 
   @RequestMapping(value = "/account/{id}", method = RequestMethod.GET)
   public ResponseEntity<Account> findById(@PathVariable int id) {
-    var account = accountRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Can not find Account with id = " + id));
-    return new ResponseEntity<>(account, HttpStatus.OK);
+    return new ResponseEntity<>(accountRepository.findById(id).orElse(null), HttpStatus.OK);
   }
 
   @RequestMapping(value = "/account", method = RequestMethod.GET)
   public ResponseEntity<List<Account>> findAll() {
-    return new ResponseEntity<>(accountRepository.findAll(), HttpStatus.OK);
+    return new ResponseEntity<>((List<Account>) accountRepository.findAll(), HttpStatus.OK);
   }
 
   @RequestMapping(value = "/account/{id}", method = RequestMethod.PUT)
