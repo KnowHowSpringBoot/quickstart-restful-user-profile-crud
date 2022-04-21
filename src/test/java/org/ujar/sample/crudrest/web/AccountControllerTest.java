@@ -72,7 +72,7 @@ public class AccountControllerTest {
     var account = new Account();
     account.setActive(true);
 
-    var numberOfRecords = 5;
+    var numberOfRecords = 3;
 
     var createdAccounts = new ArrayList<Account>();
     for (int i = 0; i < numberOfRecords; i++) {
