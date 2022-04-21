@@ -114,7 +114,7 @@ public class AccountControllerTest {
             + "    \"paged\":true\n"
             + "  },\n"
             + "  \"last\":true,\n"
-            + "  \"totalElements\":5,\n"
+            + "  \"totalElements\":3,\n"
             + "  \"totalPages\":1,\n"
             + "  \"size\":100,\n"
             + "  \"number\":0,\n"
