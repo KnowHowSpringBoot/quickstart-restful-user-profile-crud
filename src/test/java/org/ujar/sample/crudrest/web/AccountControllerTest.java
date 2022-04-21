@@ -86,23 +86,18 @@ public class AccountControllerTest {
             "{\n"
             + "  \"content\":[\n"
             + "    {\n"
-            + "      \"id\":4,\n"
             + "      \"active\":true\n"
             + "    },\n"
             + "    {\n"
-            + "      \"id\":5,\n"
             + "      \"active\":true\n"
             + "    },\n"
             + "    {\n"
-            + "      \"id\":6,\n"
             + "      \"active\":true\n"
             + "    },\n"
             + "    {\n"
-            + "      \"id\":7,\n"
             + "      \"active\":true\n"
             + "    },\n"
             + "    {\n"
-            + "      \"id\":8,\n"
             + "      \"active\":true\n"
             + "    }\n"
             + "  ],\n"
@@ -131,7 +126,7 @@ public class AccountControllerTest {
             + "  \"first\":true,\n"
             + "  \"numberOfElements\":5,\n"
             + "  \"empty\":false\n"
-            + "}", true
+            + "}"
         ));
     for (Account singleAccount : createdAccounts) {
       deleteAccount(singleAccount.getId());
