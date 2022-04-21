@@ -12,9 +12,7 @@ public class Account {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
-
-  private String name;
+  private Long id;
 
   private boolean active;
 }

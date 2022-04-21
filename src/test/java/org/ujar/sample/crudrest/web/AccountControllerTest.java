@@ -4,13 +4,11 @@ package org.ujar.sample.crudrest.web;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +35,12 @@ public class AccountControllerTest {
   @Test
   public void create() throws Exception {
     var account = new Account();
-    account.setName(UUID.randomUUID().toString());
     account.setActive(true);
 
     var responseBody = createNewAccount(account);
     assertAccountEquals(account, responseBody);
     deleteAccount(responseBody.getId());
 
-    account.setName(UUID.randomUUID().toString());
     account.setActive(false);
 
     responseBody = createNewAccount(account);
@@ -56,7 +52,6 @@ public class AccountControllerTest {
   public void findById() throws Exception {
     var gson = new Gson();
     var account = new Account();
-    account.setName(UUID.randomUUID().toString());
     account.setActive(true);
 
     var responseBody = createNewAccount(account);
@@ -75,32 +70,69 @@ public class AccountControllerTest {
   public void findAll() throws Exception {
 
     var account = new Account();
-    account.setName(UUID.randomUUID().toString());
     account.setActive(true);
 
-    int numberOfRecords = 5;
+    var numberOfRecords = 5;
 
     var createdAccounts = new ArrayList<Account>();
     for (int i = 0; i < numberOfRecords; i++) {
-      account.setName(UUID.randomUUID().toString());
       createdAccounts.add(createNewAccount(account));
     }
 
-    List<Account> allAccounts;
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/account")
+    mvc.perform(MockMvcRequestBuilders.get("/account")
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andReturn();
-    var gson = new Gson();
-    allAccounts = gson.fromJson(result.getResponse().getContentAsString(), new TypeToken<ArrayList<Account>>() {
-    }.getType());
-
-    for (Account singleAccount : allAccounts) {
-      assertNotNull(singleAccount);
-      assertNotNull(singleAccount.getId());
-      assertNotNull(singleAccount.getName());
-    }
-
+        .andExpect(content().json(
+            "{\n"
+            + "  \"content\":[\n"
+            + "    {\n"
+            + "      \"id\":1,\n"
+            + "      \"active\":true\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"id\":2,\n"
+            + "      \"active\":true\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"id\":3,\n"
+            + "      \"active\":true\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"id\":4,\n"
+            + "      \"active\":true\n"
+            + "    },\n"
+            + "    {\n"
+            + "      \"id\":5,\n"
+            + "      \"active\":true\n"
+            + "    }\n"
+            + "  ],\n"
+            + "  \"pageable\":{\n"
+            + "    \"sort\":{\n"
+            + "      \"empty\":true,\n"
+            + "      \"unsorted\":true,\n"
+            + "      \"sorted\":false\n"
+            + "    },\n"
+            + "    \"offset\":0,\n"
+            + "    \"pageSize\":100,\n"
+            + "    \"pageNumber\":0,\n"
+            + "    \"unpaged\":false,\n"
+            + "    \"paged\":true\n"
+            + "  },\n"
+            + "  \"last\":true,\n"
+            + "  \"totalElements\":5,\n"
+            + "  \"totalPages\":1,\n"
+            + "  \"size\":100,\n"
+            + "  \"number\":0,\n"
+            + "  \"sort\":{\n"
+            + "    \"empty\":true,\n"
+            + "    \"unsorted\":true,\n"
+            + "    \"sorted\":false\n"
+            + "  },\n"
+            + "  \"first\":true,\n"
+            + "  \"numberOfElements\":5,\n"
+            + "  \"empty\":false\n"
+            + "}", true
+        ));
     for (Account singleAccount : createdAccounts) {
       deleteAccount(singleAccount.getId());
     }
@@ -109,7 +141,6 @@ public class AccountControllerTest {
   @Test
   public void update() throws Exception {
     var account = new Account();
-    account.setName(UUID.randomUUID().toString());
     account.setActive(true);
 
     var responseBody = createNewAccount(account);
@@ -122,7 +153,6 @@ public class AccountControllerTest {
   @Test
   public void delete() throws Exception {
     var account = new Account();
-    account.setName(UUID.randomUUID().toString());
     account.setActive(true);
 
     var responseBody = createNewAccount(account);
@@ -145,7 +175,7 @@ public class AccountControllerTest {
     return gson.fromJson(result.getResponse().getContentAsString(), Account.class);
   }
 
-  private Account getAccountById(int id) throws Exception {
+  private Account getAccountById(Long id) throws Exception {
     var gson = new Gson();
 
     var result = mvc.perform(MockMvcRequestBuilders.get("/account/" + id)
@@ -156,7 +186,7 @@ public class AccountControllerTest {
     return gson.fromJson(result.getResponse().getContentAsString(), Account.class);
   }
 
-  private void deleteAccount(int id) throws Exception {
+  private void deleteAccount(Long id) throws Exception {
     mvc.perform(MockMvcRequestBuilders.delete("/account/" + id)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
@@ -166,8 +196,6 @@ public class AccountControllerTest {
   private void assertAccountEquals(Account account, Account responseBody) {
     assertNotNull(responseBody);
     assertNotNull(responseBody.getId());
-    assertNotNull(responseBody.getName());
-    assertEquals(responseBody.getName(), account.getName());
     assertEquals(responseBody.isActive(), account.isActive());
   }
 

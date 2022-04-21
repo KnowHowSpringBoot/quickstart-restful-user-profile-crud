@@ -11,9 +11,6 @@
             <column name="id" type="serial">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="text">
-                <constraints nullable="false"/>
-            </column>
             <column name="active" type="boolean" defaultValueBoolean="true"/>
         </createTable>
     </changeSet>
