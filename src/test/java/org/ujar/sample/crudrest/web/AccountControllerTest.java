@@ -124,7 +124,7 @@ public class AccountControllerTest {
             + "    \"sorted\":false\n"
             + "  },\n"
             + "  \"first\":true,\n"
-            + "  \"numberOfElements\":5,\n"
+            + "  \"numberOfElements\":3,\n"
             + "  \"empty\":false\n"
             + "}"
         ));
