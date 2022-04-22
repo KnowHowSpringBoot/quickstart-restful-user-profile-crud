@@ -6,8 +6,8 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="CreateAccountTable" author="ujar-crud-rest">
-        <createTable tableName="account">
+    <changeSet id="CreateUserProfileTable" author="ujar-crud-rest">
+        <createTable tableName="user_profiles">
             <column name="id" type="serial">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

@@ -24,7 +24,7 @@ public class ApplicationConfig {
   @Bean
   public SpringLiquibase liquibase(@Autowired DataSource dataSource) {
     var liquibase = new SpringLiquibase();
-    liquibase.setChangeLog("classpath:liquibase/changelog-master.xml");
+    liquibase.setChangeLog("classpath:liquibase/master.xml");
     liquibase.setDataSource(dataSource);
     return liquibase;
   }

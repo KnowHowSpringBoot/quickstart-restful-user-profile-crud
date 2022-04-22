@@ -19,67 +19,67 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.ujar.sample.crudrest.entity.Account;
+import org.ujar.sample.crudrest.entity.UserProfile;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountControllerTest {
+public class UserProfileControllerTest {
 
   private final MockMvc mvc;
 
-  public AccountControllerTest(@Autowired MockMvc mvc) {
+  public UserProfileControllerTest(@Autowired MockMvc mvc) {
     this.mvc = mvc;
   }
 
   @Test
   public void create() throws Exception {
-    var account = new Account();
-    account.setActive(true);
+    var profile = new UserProfile();
+    profile.setActive(true);
 
-    var responseBody = createNewAccount(account);
-    assertAccountEquals(account, responseBody);
-    deleteAccount(responseBody.getId());
+    var responseBody = createNewEntity(profile);
+    assertEntityEquals(profile, responseBody);
+    deleteEntity(responseBody.getId());
 
-    account.setActive(false);
+    profile.setActive(false);
 
-    responseBody = createNewAccount(account);
-    assertAccountEquals(account, responseBody);
-    deleteAccount(responseBody.getId());
+    responseBody = createNewEntity(profile);
+    assertEntityEquals(profile, responseBody);
+    deleteEntity(responseBody.getId());
   }
 
   @Test
   public void findById() throws Exception {
     var gson = new Gson();
-    var account = new Account();
-    account.setActive(true);
+    var profile = new UserProfile();
+    profile.setActive(true);
 
-    var responseBody = createNewAccount(account);
+    var responseBody = createNewEntity(profile);
 
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/account/" + responseBody.getId())
+    MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/user-profile/" + responseBody.getId())
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
-    responseBody = gson.fromJson(result.getResponse().getContentAsString(), Account.class);
+    responseBody = gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
 
-    assertAccountEquals(account, responseBody);
-    deleteAccount(responseBody.getId());
+    assertEntityEquals(profile, responseBody);
+    deleteEntity(responseBody.getId());
   }
 
   @Test
   public void findAll() throws Exception {
 
-    var account = new Account();
-    account.setActive(true);
+    var userProfile = new UserProfile();
+    userProfile.setActive(true);
 
     var numberOfRecords = 3;
 
-    var createdAccounts = new ArrayList<Account>();
+    var createdProfiles = new ArrayList<UserProfile>();
     for (int i = 0; i < numberOfRecords; i++) {
-      createdAccounts.add(createNewAccount(account));
+      createdProfiles.add(createNewEntity(userProfile));
     }
 
-    mvc.perform(MockMvcRequestBuilders.get("/account")
+    mvc.perform(MockMvcRequestBuilders.get("/user-profile")
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().json(
@@ -122,70 +122,70 @@ public class AccountControllerTest {
             + "  \"empty\":false\n"
             + "}"
         ));
-    for (Account singleAccount : createdAccounts) {
-      deleteAccount(singleAccount.getId());
+    for (UserProfile singleEntity : createdProfiles) {
+      deleteEntity(singleEntity.getId());
     }
   }
 
   @Test
   public void update() throws Exception {
-    var account = new Account();
-    account.setActive(true);
+    var profile = new UserProfile();
+    profile.setActive(true);
 
-    var responseBody = createNewAccount(account);
+    var responseBody = createNewEntity(profile);
 
-    responseBody = getAccountById(responseBody.getId());
-    assertAccountEquals(account, responseBody);
-    deleteAccount(responseBody.getId());
+    responseBody = getEntityById(responseBody.getId());
+    assertEntityEquals(profile, responseBody);
+    deleteEntity(responseBody.getId());
   }
 
   @Test
   public void delete() throws Exception {
-    var account = new Account();
-    account.setActive(true);
+    var profile = new UserProfile();
+    profile.setActive(true);
 
-    var responseBody = createNewAccount(account);
+    var responseBody = createNewEntity(profile);
 
-    deleteAccount(responseBody.getId());
-    responseBody = getAccountById(responseBody.getId());
+    deleteEntity(responseBody.getId());
+    responseBody = getEntityById(responseBody.getId());
     assertNull(responseBody);
   }
 
-  private Account createNewAccount(Account account) throws Exception {
+  private UserProfile createNewEntity(UserProfile profile) throws Exception {
     var gson = new Gson();
 
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/account")
+    MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/user-profile")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(gson.toJson(account))
+        .content(gson.toJson(profile))
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated())
         .andReturn();
 
-    return gson.fromJson(result.getResponse().getContentAsString(), Account.class);
+    return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
   }
 
-  private Account getAccountById(Long id) throws Exception {
+  private UserProfile getEntityById(Long id) throws Exception {
     var gson = new Gson();
 
-    var result = mvc.perform(MockMvcRequestBuilders.get("/account/" + id)
+    var result = mvc.perform(MockMvcRequestBuilders.get("/user-profile/" + id)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
 
-    return gson.fromJson(result.getResponse().getContentAsString(), Account.class);
+    return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
   }
 
-  private void deleteAccount(Long id) throws Exception {
-    mvc.perform(MockMvcRequestBuilders.delete("/account/" + id)
+  private void deleteEntity(Long id) throws Exception {
+    mvc.perform(MockMvcRequestBuilders.delete("/user-profile/" + id)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
   }
 
-  private void assertAccountEquals(Account account, Account responseBody) {
+  private void assertEntityEquals(UserProfile profile, UserProfile responseBody) {
     assertNotNull(responseBody);
     assertNotNull(responseBody.getId());
-    assertEquals(responseBody.isActive(), account.isActive());
+    assertEquals(responseBody.isActive(), profile.isActive());
   }
 
 }

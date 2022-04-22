@@ -18,43 +18,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ujar.sample.crudrest.dto.PageRequestDto;
-import org.ujar.sample.crudrest.entity.Account;
-import org.ujar.sample.crudrest.repository.AccountRepository;
+import org.ujar.sample.crudrest.entity.UserProfile;
+import org.ujar.sample.crudrest.repository.UserProfileRepository;
 
 @RestController
-@Tag(name = "Account controller", description = "API for Accounts")
-@RequestMapping("/account")
+@Tag(name = "User profile controller", description = "API for user profiles management")
+@RequestMapping("/user-profile")
 @Validated
 @RequiredArgsConstructor
-public class AccountController {
+public class UserProfileController {
 
-  private final AccountRepository accountRepository;
+  private final UserProfileRepository profileRepository;
 
   @PostMapping
-  public ResponseEntity<Account> create(@RequestBody Account account) {
-    return new ResponseEntity<>(accountRepository.save(account), HttpStatus.CREATED);
+  public ResponseEntity<UserProfile> create(@RequestBody UserProfile profile) {
+    return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Account> findById(@PathVariable Long id) {
-    return new ResponseEntity<>(accountRepository.findById(id).orElse(null), HttpStatus.OK);
+  public ResponseEntity<UserProfile> findById(@PathVariable Long id) {
+    return new ResponseEntity<>(profileRepository.findById(id).orElse(null), HttpStatus.OK);
   }
 
   @GetMapping
-  public ResponseEntity<Page<Account>> findAll(@ParameterObject @Valid PageRequestDto request) {
+  public ResponseEntity<Page<UserProfile>> findAll(@ParameterObject @Valid PageRequestDto request) {
     var pageRequest = PageRequest.of(request.getPage(), request.getSize());
-    return new ResponseEntity<>(accountRepository.findAll(pageRequest), HttpStatus.OK);
+    return new ResponseEntity<>(profileRepository.findAll(pageRequest), HttpStatus.OK);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Account> update(@PathVariable Long id, @RequestBody Account account) {
-    account.setId(id);
-    return new ResponseEntity<>(accountRepository.save(account), HttpStatus.OK);
+  public ResponseEntity<UserProfile> update(@PathVariable Long id, @RequestBody UserProfile profile) {
+    profile.setId(id);
+    return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")
   public HttpStatus delete(@PathVariable Long id) {
-    accountRepository.deleteById(id);
+    profileRepository.deleteById(id);
     return HttpStatus.OK;
   }
 
