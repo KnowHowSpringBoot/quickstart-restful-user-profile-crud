@@ -4,7 +4,7 @@ build :
   relativePath : ${SWAGGER_RELATIVE_PATH:}
 spring :
   application :
-    name : sample-crud-rest
+    name : sample-crud-rest-user-profile
   security :
     users :
       admin :

@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.dto;
+package org.ujar.sample.crudrest.userprofile.dto;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;

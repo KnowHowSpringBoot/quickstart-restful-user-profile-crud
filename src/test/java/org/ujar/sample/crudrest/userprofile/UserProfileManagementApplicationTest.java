@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest;
+package org.ujar.sample.crudrest.userprofile;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

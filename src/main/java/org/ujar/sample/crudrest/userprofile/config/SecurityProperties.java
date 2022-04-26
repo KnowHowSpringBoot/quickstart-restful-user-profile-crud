@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.config;
+package org.ujar.sample.crudrest.userprofile.config;
 
 import java.util.HashMap;
 import java.util.Map;

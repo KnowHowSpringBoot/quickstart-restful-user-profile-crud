@@ -1,6 +1,6 @@
 # CRUD - Sample Restful Application
 
-[![Build Status](https://drone.ujar.org/api/badges/ujar-org/sample-crud-rest/status.svg?ref=refs/heads/main)](https://drone.ujar.org/ujar-org/sample-crud-rest)
+[![Build Status](https://drone.ujar.org/api/badges/ujar-org/sample-crud-rest-user-profile/status.svg?ref=refs/heads/main)](https://drone.ujar.org/ujar-org/sample-crud-rest-user-profile)
 
 Minimal Spring Boot based RESTful CRUD example, including Swagger.
 
@@ -29,8 +29,8 @@ This application is a [Spring Boot](https://spring.io/guides/gs/spring-boot) app
 using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
 
 ```
-git clone https://github.com/ujar-org/sample-crud-rest.git
-cd sample-crud-rest
+git clone https://github.com/ujar-org/sample-crud-rest-user-profile.git
+cd sample-crud-rest-user-profile
 ./mvnw package
 java -jar target/*.jar
 ```
@@ -42,7 +42,7 @@ You can then access Swagger UI here: http://localhost:8080/swagger-ui.html
 1) On the command line
 
 ```
-git clone https://github.com/ujar-org/sample-crud-rest.git
+git clone https://github.com/ujar-org/sample-crud-rest-user-profile.git
 ```
 
 2) Inside IDE

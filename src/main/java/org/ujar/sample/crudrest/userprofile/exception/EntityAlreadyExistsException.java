@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.exception;
+package org.ujar.sample.crudrest.userprofile.exception;
 
 public class EntityAlreadyExistsException extends RuntimeException {
 

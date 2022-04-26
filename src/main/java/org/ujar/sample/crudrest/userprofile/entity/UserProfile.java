@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.entity;
+package org.ujar.sample.crudrest.userprofile.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

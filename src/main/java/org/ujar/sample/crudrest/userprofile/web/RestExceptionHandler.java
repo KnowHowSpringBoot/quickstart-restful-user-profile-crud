@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.web;
+package org.ujar.sample.crudrest.userprofile.web;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.util.Arrays;
@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import org.ujar.sample.crudrest.dto.ErrorResponse;
-import org.ujar.sample.crudrest.exception.EntityAlreadyExistsException;
-import org.ujar.sample.crudrest.exception.EntityNotFoundException;
+import org.ujar.sample.crudrest.userprofile.dto.ErrorResponse;
+import org.ujar.sample.crudrest.userprofile.exception.EntityAlreadyExistsException;
+import org.ujar.sample.crudrest.userprofile.exception.EntityNotFoundException;
 
 @ControllerAdvice
 @ResponseBody

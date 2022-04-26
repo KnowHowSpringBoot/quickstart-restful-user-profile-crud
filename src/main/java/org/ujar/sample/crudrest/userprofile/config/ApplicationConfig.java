@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.config;
+package org.ujar.sample.crudrest.userprofile.config;
 
 import javax.sql.DataSource;
 import liquibase.integration.spring.SpringLiquibase;
@@ -15,7 +15,7 @@ import org.ujar.starter.rest.logbook.LogbookResponseOnStatus;
 @Configuration
 @LogbookResponseOnStatus
 @LogbookJsonBodyFilter
-@EnableJpaRepositories({ "org.ujar.sample.crudrest.repository" })
+@EnableJpaRepositories({"org.ujar.sample.crudrest.userprofile.repository"})
 @EnableJpaAuditing
 @EnableTransactionManagement
 @EnableConfigurationProperties({SecurityProperties.class})
