@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
-@AnalyzeClasses(packages = "org.ujar.sample.crudrest")
+@AnalyzeClasses(packages = "org.ujar.sample.rest.userprofilecrud")
 public class NamingConventionTest {
 
   @ArchTest

@@ -12,7 +12,7 @@ spring :
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     driver-class-name :  ${DATASOURCE_DRIVER:org.testcontainers.jdbc.ContainerDatabaseDriver}
-    url :  ${DATASOURCE_URL:jdbc:tc:postgresql:12.1:///crudrest}
+    url :  ${DATASOURCE_URL:jdbc:tc:postgresql:13.5:///sa_test_db}
     username : ${DATASOURCE_USERNAME:postgres}
     password : ${DATASOURCE_PASSWORD:postgres}
     hikari :

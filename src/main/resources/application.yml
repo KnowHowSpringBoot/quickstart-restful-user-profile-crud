@@ -15,7 +15,7 @@ spring :
         password : ${SECURITY_EDITOR_PASSWORD:editor}
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
-    url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/crudrest}
+    url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/sa_test_db}
     username : ${DATASOURCE_USERNAME:postgres}
     password : ${DATASOURCE_PASSWORD:postgres}
     driver-class-name : ${DATASOURCE_DRIVER:org.postgresql.Driver}

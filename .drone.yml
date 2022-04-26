@@ -8,7 +8,7 @@ steps:
     image: maven:3-jdk-11-slim
     environment :
       DATASOURCE_DRIVER: org.postgresql.Driver
-      DATASOURCE_URL: jdbc:postgresql://db:5432/crudrest
+      DATASOURCE_URL: jdbc:postgresql://db:5432/sa_test_db
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
       DEPLOYER_PASSWORD :
@@ -91,8 +91,8 @@ steps:
 
 services:
   - name: db
-    image: postgres:12-alpine
+    image: postgres:13.5
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: crudrest
+      POSTGRES_DB: sa_test_db
