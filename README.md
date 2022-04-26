@@ -2,7 +2,7 @@
 
 [![Build Status](https://drone.ujar.org/api/badges/ujar-org/sample-crud-rest-user-profile/status.svg?ref=refs/heads/main)](https://drone.ujar.org/ujar-org/sample-crud-rest-user-profile)
 
-Minimal Spring Boot based RESTful CRUD example, including Swagger.
+Minimal Spring Boot based RESTful CRUD example, which manages user profile entity (including Swagger UI).
 
 ## Technology stack
 
