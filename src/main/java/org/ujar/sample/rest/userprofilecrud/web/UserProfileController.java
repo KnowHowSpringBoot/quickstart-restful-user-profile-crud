@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.userprofile.web;
+package org.ujar.sample.rest.userprofilecrud.web;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ujar.sample.crudrest.userprofile.dto.PageRequestDto;
-import org.ujar.sample.crudrest.userprofile.entity.UserProfile;
-import org.ujar.sample.crudrest.userprofile.repository.UserProfileRepository;
+import org.ujar.sample.rest.userprofilecrud.dto.PageRequestDto;
+import org.ujar.sample.rest.userprofilecrud.entity.UserProfile;
+import org.ujar.sample.rest.userprofilecrud.repository.UserProfileRepository;
 
 @RestController
 @Tag(name = "User profile controller", description = "API for user profiles management")

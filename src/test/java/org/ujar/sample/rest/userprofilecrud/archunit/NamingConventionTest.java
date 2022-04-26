@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.userprofile.archunit;
+package org.ujar.sample.rest.userprofilecrud.archunit;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 

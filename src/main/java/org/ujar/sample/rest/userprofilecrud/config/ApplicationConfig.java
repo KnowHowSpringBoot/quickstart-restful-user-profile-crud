@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.userprofile.config;
+package org.ujar.sample.rest.userprofilecrud.config;
 
 import javax.sql.DataSource;
 import liquibase.integration.spring.SpringLiquibase;

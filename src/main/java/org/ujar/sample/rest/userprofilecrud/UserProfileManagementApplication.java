@@ -1,4 +1,4 @@
-package org.ujar.sample.crudrest.userprofile;
+package org.ujar.sample.rest.userprofilecrud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

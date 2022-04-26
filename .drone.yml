@@ -20,7 +20,7 @@ steps:
     commands:
       - mvn test -P default -B -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
       - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -Dcheckstyle.skip=true -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn -X org.jacoco:jacoco-maven-plugin:report org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN  -Dsonar.projectKey=ujar-org:sample-crud-rest-user-profile -Dsonar.projectName=ujar-org:sample-crud-rest-user-profile --batch-mode --file pom.xml -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn -X org.jacoco:jacoco-maven-plugin:report org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN  -Dsonar.projectKey=ujar-org:sample-rest-user-profile-crud -Dsonar.projectName=ujar-org:sample-rest-user-profile-crud --batch-mode --file pom.xml -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
     when:
       branch:
         include:
@@ -76,7 +76,7 @@ steps:
         from_secret: DOCKER_USERNAME
       password:
         from_secret: DOCKER_PASSWORD
-      repo: docker-registry.ujar.org/ujar/sample-crud-rest-user-profile
+      repo: docker-registry.ujar.org/ujar/sample-rest-user-profile-crud
       registry: docker-registry.ujar.org
       tags :
         - latest

@@ -1,6 +1,6 @@
 # CRUD - Sample Restful Application
 
-[![Build Status](https://drone.ujar.org/api/badges/ujar-org/sample-crud-rest-user-profile/status.svg?ref=refs/heads/main)](https://drone.ujar.org/ujar-org/sample-crud-rest-user-profile)
+[![Build Status](https://drone.ujar.org/api/badges/ujar-org/sample-rest-user-profile-crud/status.svg?ref=refs/heads/main)](https://drone.ujar.org/ujar-org/sample-rest-user-profile-crud)
 
 Minimal Spring Boot based RESTful CRUD example, which manages user profile entity (including Swagger UI).
 
@@ -29,8 +29,8 @@ This application is a [Spring Boot](https://spring.io/guides/gs/spring-boot) app
 using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
 
 ```
-git clone https://github.com/ujar-org/sample-crud-rest-user-profile.git
-cd sample-crud-rest-user-profile
+git clone https://github.com/ujar-org/sample-rest-user-profile-crud.git
+cd sample-rest-user-profile-crud
 ./mvnw package
 java -jar target/*.jar
 ```
@@ -42,7 +42,7 @@ You can then access Swagger UI here: http://localhost:8080/swagger-ui.html
 1) On the command line
 
 ```
-git clone https://github.com/ujar-org/sample-crud-rest-user-profile.git
+git clone https://github.com/ujar-org/sample-rest-user-profile-crud.git
 ```
 
 2) Inside IDE

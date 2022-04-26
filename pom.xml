@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.ujar.sample</groupId>
-    <artifactId>sample-crud-rest-user-profile</artifactId>
+    <artifactId>sample-rest-user-profile-crud</artifactId>
     <version>0.0.7-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>sample-crud-rest-user-profile</name>
+    <name>sample-rest-user-profile-crud</name>
     <description>This backend version of the Spring application only provides a very simple REST API.</description>
     <licenses>
         <license>
@@ -32,7 +32,7 @@
     </developers>
 
     <scm>
-        <connection>scm:git:https://github.com/ujar-org/sample-crud-rest-user-profile.git</connection>
+        <connection>scm:git:https://github.com/ujar-org/sample-rest-user-profile-crud.git</connection>
         <tag>HEAD</tag>
     </scm>
 
