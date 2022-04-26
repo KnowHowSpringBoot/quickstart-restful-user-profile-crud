@@ -19,7 +19,7 @@ steps:
         from_secret : SONAR_TOKEN
     commands:
       - mvn compile test-compile com.github.spotbugs:spotbugs-maven-plugin:check pmd:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=false -Dspotbugs.includeTests=true -B -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent clean package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:sample-rest-user-profile-crud -Dsonar.projectName=ujar-org:sample-rest-user-profile-crud --batch-mode -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORDASSWORD
+      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent clean package org.jacoco:jacoco-maven-plugin:report -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:sample-rest-user-profile-crud -Dsonar.projectName=ujar-org:sample-rest-user-profile-crud --batch-mode -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORDASSWORD
     when:
       branch:
         include:
