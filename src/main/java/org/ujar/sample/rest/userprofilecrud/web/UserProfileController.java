@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.ujar.sample.rest.userprofilecrud.dto.PageRequestDto;
+import org.ujar.sample.rest.userprofilecrud.dto.UserProfileDto;
 import org.ujar.sample.rest.userprofilecrud.entity.UserProfile;
 import org.ujar.sample.rest.userprofilecrud.repository.UserProfileRepository;
 
@@ -47,8 +48,8 @@ public class UserProfileController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<UserProfile> update(@PathVariable Long id, @RequestBody UserProfile profile) {
-    profile.setId(id);
+  public ResponseEntity<UserProfile> update(@PathVariable Long id, @RequestBody UserProfileDto request) {
+    var profile = new UserProfile(request.getId(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.OK);
   }
 
