@@ -32,7 +32,8 @@ public class UserProfileController {
   private final UserProfileRepository profileRepository;
 
   @PostMapping
-  public ResponseEntity<UserProfile> create(@RequestBody UserProfile profile) {
+  public ResponseEntity<UserProfile> create(@RequestBody UserProfileDto request) {
+    var profile = new UserProfile(null, request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
   }
 
