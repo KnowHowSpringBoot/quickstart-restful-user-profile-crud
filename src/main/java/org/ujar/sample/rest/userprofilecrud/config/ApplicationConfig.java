@@ -15,7 +15,7 @@ import org.ujar.starter.rest.logbook.LogbookResponseOnStatus;
 @Configuration
 @LogbookResponseOnStatus
 @LogbookJsonBodyFilter
-@EnableJpaRepositories({"org.ujar.sample.crudrest.userprofile.repository"})
+@EnableJpaRepositories({"org.ujar.sample.rest.userprofilecrud.repository"})
 @EnableJpaAuditing
 @EnableTransactionManagement
 @EnableConfigurationProperties({SecurityProperties.class})

@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "user_profiles")
+@Table(name = "sample_rest_user_profiles")
 public class UserProfile {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

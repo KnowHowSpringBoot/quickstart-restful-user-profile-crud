@@ -2,13 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ujar.sample</groupId>
-    <artifactId>sample-rest-user-profile-crud</artifactId>
+    <groupId>org.ujar.sample.rest</groupId>
+    <artifactId>user-profile-crud</artifactId>
     <version>0.0.7-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>sample-rest-user-profile-crud</name>
-    <description>This backend version of the Spring application only provides a very simple REST API.</description>
+    <description>Minimal Spring Boot based RESTful CRUD example, which manages user profile entity (including Swagger UI).</description>
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>

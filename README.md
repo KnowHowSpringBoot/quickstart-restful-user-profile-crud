@@ -1,4 +1,4 @@
-# CRUD - Sample Restful Application
+# User Profile CRUD - Sample Restful App
 
 [![Build Status](https://drone.ujar.org/api/badges/ujar-org/sample-rest-user-profile-crud/status.svg?ref=refs/heads/main)](https://drone.ujar.org/ujar-org/sample-rest-user-profile-crud)
 
