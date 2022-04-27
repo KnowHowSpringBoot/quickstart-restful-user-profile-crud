@@ -1,6 +1,7 @@
 # User Profile CRUD - Sample Restful App
 
 [![Build Status](https://drone.ujar.org/api/badges/ujar-org/sample-rest-user-profile-crud/status.svg?ref=refs/heads/main)](https://drone.ujar.org/ujar-org/sample-rest-user-profile-crud)
+[![Quality Gate Status](https://sonarqube.ujar.org/api/project_badges/measure?project=ujar-org%3Asample-rest-user-profile-crud&metric=alert_status&token=d260d74c53427a25032fefb0ffd40a117bc2f85b)](https://sonarqube.ujar.org/dashboard?id=ujar-org%3Asample-rest-user-profile-crud)
 
 Minimal Spring Boot based RESTful CRUD example, which manages user profile entity (including Swagger UI).
 
