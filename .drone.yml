@@ -2,10 +2,18 @@ kind: pipeline
 name: build
 
 type : docker
+
+volumes:
+  - name: m2cache
+    host:
+      path: /var/cache/m2cache
 steps:
 
   - name: test
     image: maven:3-openjdk-17-slim
+    volumes:
+      - name: m2cache
+        path: /root/.m2
     environment :
       DATASOURCE_DRIVER: org.postgresql.Driver
       DATASOURCE_URL: jdbc:postgresql://db:5432/sa_test_db
@@ -34,6 +42,9 @@ steps:
     depends_on :
       - test
     image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -55,6 +66,9 @@ steps:
     depends_on :
       - test
     image: maven:3-openjdk-17-slim
+    volumes :
+      - name : m2cache
+        path : /root/.m2
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
