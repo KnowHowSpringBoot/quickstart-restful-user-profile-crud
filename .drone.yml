@@ -5,7 +5,7 @@ type : docker
 steps:
 
   - name: test
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim
     environment :
       DATASOURCE_DRIVER: org.postgresql.Driver
       DATASOURCE_URL: jdbc:postgresql://db:5432/sa_test_db
@@ -33,7 +33,7 @@ steps:
   - name: publish-snapshot-package
     depends_on :
       - test
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME
@@ -54,7 +54,7 @@ steps:
   - name: publish-release-package
     depends_on :
       - test
-    image: maven:3-jdk-11-slim
+    image: maven:3-openjdk-17-slim
     environment :
       DEPLOYER_USERNAME :
         from_secret : DEPLOYER_USERNAME

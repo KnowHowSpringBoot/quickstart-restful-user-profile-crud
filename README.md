@@ -6,13 +6,13 @@ Minimal Spring Boot based RESTful CRUD example, which manages user profile entit
 
 ## Technology stack
 
-Java 11, Spring Boot
+Java 17, Spring Boot
 
 ## Prerequisites
 
 The following items should be installed in your system:
 
-* Java 11 or newer.
+* Java 17 or newer.
 * git command line tool (https://help.github.com/articles/set-up-git)
 * Your preferred IDE (IDEA preferably)
 

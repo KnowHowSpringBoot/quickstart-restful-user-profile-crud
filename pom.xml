@@ -43,6 +43,9 @@
     </parent>
 
     <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <sonar.exclusions>**/*Application.java</sonar.exclusions>
         <sonar.coverage.exclusions>**/*Test.java,**/Test*.java</sonar.coverage.exclusions>
     </properties>

@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk11:jdk-11.0.14_9
+FROM openjdk:17.0.2-slim
 
 WORKDIR /app
 
