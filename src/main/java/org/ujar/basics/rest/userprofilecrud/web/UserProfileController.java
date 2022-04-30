@@ -33,7 +33,7 @@ public class UserProfileController {
 
   @PostMapping
   public ResponseEntity<UserProfile> create(@RequestBody UserProfileDto request) {
-    var profile = new UserProfile(null, request.active());
+    var profile = new UserProfile(null, request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
   }
 
@@ -50,7 +50,7 @@ public class UserProfileController {
 
   @PutMapping("/{id}")
   public ResponseEntity<UserProfile> update(@PathVariable Long id, @RequestBody UserProfileDto request) {
-    var profile = new UserProfile(request.id(), request.active());
+    var profile = new UserProfile(id, request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.OK);
   }
 

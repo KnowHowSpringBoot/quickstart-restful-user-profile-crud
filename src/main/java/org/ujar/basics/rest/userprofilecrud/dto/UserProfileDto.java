@@ -1,4 +1,7 @@
 package org.ujar.basics.rest.userprofilecrud.dto;
 
-public record UserProfileDto(Long id, boolean active) {
+import lombok.Getter;
+
+@Getter
+public record UserProfileDto(boolean active) {
 }
