@@ -13,8 +13,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "basics_rest_user_profiles")
+@Table(name = UserProfile.TABLE_NAME)
 public class UserProfile {
+
+  private static final String TABLE_NAME =  "basics_rest_user_profiles";
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
