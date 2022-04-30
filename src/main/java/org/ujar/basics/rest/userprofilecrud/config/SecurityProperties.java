@@ -1,4 +1,4 @@
-package org.ujar.sample.rest.userprofilecrud.config;
+package org.ujar.basics.rest.userprofilecrud.config;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package org.ujar.sample.rest.userprofilecrud.config;
+package org.ujar.basics.rest.userprofilecrud.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

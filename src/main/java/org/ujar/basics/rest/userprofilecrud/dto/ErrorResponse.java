@@ -1,4 +1,4 @@
-package org.ujar.sample.rest.userprofilecrud.dto;
+package org.ujar.basics.rest.userprofilecrud.dto;
 
 import java.util.List;
 import lombok.Value;

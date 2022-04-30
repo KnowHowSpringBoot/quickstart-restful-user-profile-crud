@@ -1,4 +1,4 @@
-package org.ujar.sample.rest.userprofilecrud.entity;
+package org.ujar.basics.rest.userprofilecrud.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "sample_rest_user_profiles")
+@Table(name = "basics_rest_user_profiles")
 public class UserProfile {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

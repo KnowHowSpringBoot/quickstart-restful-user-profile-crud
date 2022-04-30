@@ -1,4 +1,4 @@
-package org.ujar.sample.rest.userprofilecrud.exception;
+package org.ujar.basics.rest.userprofilecrud.exception;
 
 public class EntityAlreadyExistsException extends RuntimeException {
 

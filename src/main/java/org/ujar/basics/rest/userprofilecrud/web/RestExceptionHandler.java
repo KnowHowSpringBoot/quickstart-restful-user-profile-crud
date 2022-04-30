@@ -1,4 +1,4 @@
-package org.ujar.sample.rest.userprofilecrud.web;
+package org.ujar.basics.rest.userprofilecrud.web;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.util.Arrays;
@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import org.ujar.sample.rest.userprofilecrud.dto.ErrorResponse;
-import org.ujar.sample.rest.userprofilecrud.exception.EntityAlreadyExistsException;
-import org.ujar.sample.rest.userprofilecrud.exception.EntityNotFoundException;
+import org.ujar.basics.rest.userprofilecrud.dto.ErrorResponse;
+import org.ujar.basics.rest.userprofilecrud.exception.EntityAlreadyExistsException;
+import org.ujar.basics.rest.userprofilecrud.exception.EntityNotFoundException;
 
 @ControllerAdvice
 @ResponseBody

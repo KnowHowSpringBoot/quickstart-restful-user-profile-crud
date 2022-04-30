@@ -2,7 +2,7 @@ version: '3'
 services:
   postgres:
     image: "postgres:13.5"
-    container_name: ujar-sample-rest-user-profile-crud-postgres
+    container_name: ujar-basics-rest-user-profile-crud-postgres
     ports :
       - "5432:5432"
     environment:

@@ -1,4 +1,4 @@
-package org.ujar.sample.rest.userprofilecrud.archunit;
+package org.ujar.basics.rest.userprofilecrud.archunit;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
-@AnalyzeClasses(packages = "org.ujar.sample.rest.userprofilecrud")
+@AnalyzeClasses(packages = "org.ujar.basics.rest.userprofilecrud")
 public class NamingConventionTest {
 
   @ArchTest

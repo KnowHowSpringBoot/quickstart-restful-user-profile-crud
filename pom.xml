@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ujar.sample.rest</groupId>
+    <groupId>org.ujar.basics.rest</groupId>
     <artifactId>user-profile-crud</artifactId>
     <version>0.0.7-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>sample-rest-user-profile-crud</name>
+    <name>basics-rest-user-profile-crud</name>
     <description>Minimal Spring Boot based RESTful CRUD example, which manages user profile entity (including Swagger UI).</description>
     <licenses>
         <license>
@@ -32,7 +32,7 @@
     </developers>
 
     <scm>
-        <connection>scm:git:https://github.com/ujar-org/sample-rest-user-profile-crud.git</connection>
+        <connection>scm:git:https://github.com/ujar-org/basics-rest-user-profile-crud.git</connection>
         <tag>HEAD</tag>
     </scm>
 

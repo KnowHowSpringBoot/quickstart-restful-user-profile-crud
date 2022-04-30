@@ -1,4 +1,4 @@
-package org.ujar.sample.rest.userprofilecrud.web;
+package org.ujar.basics.rest.userprofilecrud.web;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ujar.sample.rest.userprofilecrud.dto.PageRequestDto;
-import org.ujar.sample.rest.userprofilecrud.dto.UserProfileDto;
-import org.ujar.sample.rest.userprofilecrud.entity.UserProfile;
-import org.ujar.sample.rest.userprofilecrud.repository.UserProfileRepository;
+import org.ujar.basics.rest.userprofilecrud.dto.PageRequestDto;
+import org.ujar.basics.rest.userprofilecrud.dto.UserProfileDto;
+import org.ujar.basics.rest.userprofilecrud.entity.UserProfile;
+import org.ujar.basics.rest.userprofilecrud.repository.UserProfileRepository;
 
 @RestController
 @Tag(name = "User profile controller", description = "API for user profiles management")

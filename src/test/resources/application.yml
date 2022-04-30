@@ -1,6 +1,6 @@
 spring :
   application :
-    name : sample-rest-user-profile-crud
+    name : basics-rest-user-profile-crud
   security :
     users :
       admin :
