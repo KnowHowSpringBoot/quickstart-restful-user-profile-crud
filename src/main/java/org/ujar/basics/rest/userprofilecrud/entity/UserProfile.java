@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Table(name = UserProfile.TABLE_NAME)
 public class UserProfile {
 
-  private static final String TABLE_NAME =  "basics_rest_user_profiles";
+  protected static final String TABLE_NAME =  "basics_rest_user_profiles";
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
