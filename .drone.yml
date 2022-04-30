@@ -85,6 +85,8 @@ steps:
       - publish-snapshot-package
     image: plugins/docker
     settings:
+      dockerfile: src/main/docker/Dockerfile
+      context: ./
       storage_driver: vfs
       username:
         from_secret: DOCKER_USERNAME
