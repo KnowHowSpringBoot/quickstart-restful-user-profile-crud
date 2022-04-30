@@ -79,7 +79,7 @@ public class UserProfileControllerTest {
       createdProfiles.add(createNewEntity(userProfile));
     }
 
-    mvc.perform(MockMvcRequestBuilders.get("/user-profile")
+    mvc.perform(MockMvcRequestBuilders.get("/v1/user-profile")
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().json(
@@ -154,7 +154,7 @@ public class UserProfileControllerTest {
   private UserProfile createNewEntity(UserProfile profile) throws Exception {
     var gson = new Gson();
 
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/user-profile")
+    MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/v1/user-profile")
         .contentType(MediaType.APPLICATION_JSON)
         .content(gson.toJson(profile))
         .accept(MediaType.APPLICATION_JSON))
