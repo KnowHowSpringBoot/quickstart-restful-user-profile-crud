@@ -3,7 +3,6 @@ package org.ujar.basics.rest.userprofilecrud.web;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.validation.ConstraintViolationException;
@@ -52,7 +51,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     var globalErrors = exception.getBindingResult().getGlobalErrors().stream()
         .map(DefaultMessageSourceResolvable::getDefaultMessage)
         .map(ErrorResponse.Error::new);
-    var errors = Stream.concat(fieldErrors, globalErrors).collect(Collectors.toList());
+    var errors = Stream.concat(fieldErrors, globalErrors).toList();
 
     return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.UNPROCESSABLE_ENTITY);
   }
@@ -88,7 +87,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                                                        @Nonnull WebRequest request) {
     var errors = bindException.getAllErrors().stream()
         .map(error -> new ErrorResponse.Error(error.getDefaultMessage()))
-        .collect(Collectors.toList());
+        .toList();
     return new ResponseEntity<>(new ErrorResponse(errors), HttpStatus.BAD_REQUEST);
   }
 
@@ -99,7 +98,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         .map(violation -> String
             .format("Property path: \"%s\": %s", violation.getPropertyPath(), violation.getMessage()))
         .map(ErrorResponse.Error::new)
-        .collect(Collectors.toList());
+        .toList();
     return new ErrorResponse(errors);
   }
 
