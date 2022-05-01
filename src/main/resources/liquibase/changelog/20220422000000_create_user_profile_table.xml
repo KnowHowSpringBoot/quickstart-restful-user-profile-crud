@@ -7,11 +7,12 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="CreateUserProfileTable" author="ujar-crud-rest">
-        <createTable tableName="basics_rest_user_profiles">
-            <column name="id" type="serial">
+        <createSequence sequenceName="USER_PROFILE_ID_SEQ" startValue="1" incrementBy="50"/>
+        <createTable tableName="BASICS_REST_USER_PROFILES">
+            <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="active" type="boolean" defaultValueBoolean="true"/>
+            <column name="active" type="boolean" defaultValueBoolean="false"/>
         </createTable>
     </changeSet>
 

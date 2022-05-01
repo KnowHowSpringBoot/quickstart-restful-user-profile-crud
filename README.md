@@ -22,7 +22,7 @@ The following items should be installed in your system:
 Application uses a Postgres as a persistent storage. Options to get it up:
 
 1. Use remote existing postgres. It is needed to specify the path in configs.
-1. Start local postgres in docker `docker-compose -f docker-compose-dev.yml up -d`
+1. Start local postgres in docker `docker-compose -f docker-compose.dev.yml up -d`
 
 ### Running locally
 

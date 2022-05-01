@@ -135,6 +135,9 @@ public class UserProfileControllerTest {
     var responseBody = createNewEntity(profile);
 
     responseBody = getEntityById(responseBody.getId());
+    responseBody.setActive(false);
+    responseBody = updateEntity(responseBody);
+    profile.setActive(false);
     assertEntityEquals(profile, responseBody);
     deleteEntity(responseBody.getId());
   }
@@ -159,6 +162,19 @@ public class UserProfileControllerTest {
         .content(gson.toJson(profile))
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated())
+        .andReturn();
+
+    return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
+  }
+
+  private UserProfile updateEntity(UserProfile profile) throws Exception {
+    var gson = new Gson();
+    var id = profile.getId();
+    MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/v1/user-profile/" + id)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(gson.toJson(profile))
+            .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
         .andReturn();
 
     return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
