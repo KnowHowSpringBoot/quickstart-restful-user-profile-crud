@@ -10,9 +10,6 @@ spring :
       admin :
         name : ${SECURITY_ADMIN_NAME:admin}
         password : ${SECURITY_ADMIN_PASSWORD:admin}
-      editor :
-        name : ${SECURITY_EDITOR_NAME:editor}
-        password : ${SECURITY_EDITOR_PASSWORD:editor}
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/sa_test_db}

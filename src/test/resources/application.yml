@@ -6,9 +6,6 @@ spring :
       admin :
         name : admin
         password : admin
-      editor :
-        name : editor
-        password : editor
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     driver-class-name :  ${DATASOURCE_DRIVER:org.testcontainers.jdbc.ContainerDatabaseDriver}
