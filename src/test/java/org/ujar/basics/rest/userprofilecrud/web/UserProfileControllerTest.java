@@ -24,16 +24,16 @@ import org.ujar.basics.rest.userprofilecrud.entity.UserProfile;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class UserProfileControllerTest {
+class UserProfileControllerTest {
 
   private final MockMvc mvc;
 
-  public UserProfileControllerTest(@Autowired MockMvc mvc) {
+  UserProfileControllerTest(@Autowired MockMvc mvc) {
     this.mvc = mvc;
   }
 
   @Test
-  public void create() throws Exception {
+  void create() throws Exception {
     var profile = new UserProfile();
     profile.setActive(true);
 
@@ -49,7 +49,7 @@ public class UserProfileControllerTest {
   }
 
   @Test
-  public void findById() throws Exception {
+  void findById() throws Exception {
     var gson = new Gson();
     var profile = new UserProfile();
     profile.setActive(true);
@@ -67,7 +67,7 @@ public class UserProfileControllerTest {
   }
 
   @Test
-  public void findAll() throws Exception {
+  void findAll() throws Exception {
 
     var userProfile = new UserProfile();
     userProfile.setActive(true);
@@ -128,7 +128,7 @@ public class UserProfileControllerTest {
   }
 
   @Test
-  public void update() throws Exception {
+  void update() throws Exception {
     var profile = new UserProfile();
     profile.setActive(true);
 
@@ -143,7 +143,7 @@ public class UserProfileControllerTest {
   }
 
   @Test
-  public void delete() throws Exception {
+  void delete() throws Exception {
     var profile = new UserProfile();
     profile.setActive(true);
 
