@@ -56,7 +56,7 @@ public class UserProfileControllerTest {
 
     var responseBody = createNewEntity(profile);
 
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/v1/user-profile/" + responseBody.getId())
+    MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/v1/user-profiles/" + responseBody.getId())
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
@@ -79,7 +79,7 @@ public class UserProfileControllerTest {
       createdProfiles.add(createNewEntity(userProfile));
     }
 
-    mvc.perform(MockMvcRequestBuilders.get("/v1/user-profile")
+    mvc.perform(MockMvcRequestBuilders.get("/v1/user-profiles")
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().json(
@@ -157,7 +157,7 @@ public class UserProfileControllerTest {
   private UserProfile createNewEntity(UserProfile profile) throws Exception {
     var gson = new Gson();
 
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/v1/user-profile")
+    MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/v1/user-profiles")
         .contentType(MediaType.APPLICATION_JSON)
         .content(gson.toJson(profile))
         .accept(MediaType.APPLICATION_JSON))
@@ -170,7 +170,7 @@ public class UserProfileControllerTest {
   private UserProfile updateEntity(UserProfile profile) throws Exception {
     var gson = new Gson();
     var id = profile.getId();
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/v1/user-profile/" + id)
+    MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/v1/user-profiles/" + id)
             .contentType(MediaType.APPLICATION_JSON)
             .content(gson.toJson(profile))
             .accept(MediaType.APPLICATION_JSON))
@@ -183,7 +183,7 @@ public class UserProfileControllerTest {
   private UserProfile getEntityById(Long id) throws Exception {
     var gson = new Gson();
 
-    var result = mvc.perform(MockMvcRequestBuilders.get("/v1/user-profile/" + id)
+    var result = mvc.perform(MockMvcRequestBuilders.get("/v1/user-profiles/" + id)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
@@ -192,7 +192,7 @@ public class UserProfileControllerTest {
   }
 
   private void deleteEntity(Long id) throws Exception {
-    mvc.perform(MockMvcRequestBuilders.delete("/v1/user-profile/" + id)
+    mvc.perform(MockMvcRequestBuilders.delete("/v1/user-profiles/" + id)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();

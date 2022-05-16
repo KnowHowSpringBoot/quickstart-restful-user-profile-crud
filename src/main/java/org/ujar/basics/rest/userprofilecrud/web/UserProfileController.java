@@ -24,7 +24,7 @@ import org.ujar.basics.rest.userprofilecrud.repository.UserProfileRepository;
 
 @RestController
 @Tag(name = "User profile controller", description = "API for user profiles management")
-@RequestMapping("/v1/user-profile")
+@RequestMapping("/v1/user-profiles")
 @Validated
 @RequiredArgsConstructor
 public class UserProfileController {
