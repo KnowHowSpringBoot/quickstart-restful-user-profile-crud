@@ -7,8 +7,8 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
     <changeSet id="CreateUserProfileTable" author="ujar-crud-rest">
-        <createSequence sequenceName="USER_PROFILE_ID_SEQ" startValue="1" incrementBy="50"/>
-        <createTable tableName="BASICS_REST_USER_PROFILES">
+        <createSequence sequenceName="user_profile_id_seq" startValue="1050" incrementBy="50"/>
+        <createTable tableName="basics_rest_user_profiles">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
