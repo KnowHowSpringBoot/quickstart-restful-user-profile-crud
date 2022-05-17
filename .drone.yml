@@ -9,7 +9,7 @@ volumes:
       path: /var/cache/m2cache
 steps:
 
-  - name: test
+  - name: build
     image: maven:3-openjdk-17-slim
     volumes:
       - name: m2cache
@@ -27,8 +27,10 @@ steps:
         from_secret : SONAR_TOKEN
     commands:
       - rm -rf /root/.m2/repository/org/ujar/
-      - mvn compile test-compile com.github.spotbugs:spotbugs-maven-plugin:check pmd:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=false -Dspotbugs.includeTests=true -B -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
-      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent clean package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:basics-rest-user-profile-crud -Dsonar.projectName=ujar-org:basics-rest-user-profile-crud --batch-mode -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn clean compile test-compile -B  --file pom.xml -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn pmd:check -B --file pom.xml -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn com.github.spotbugs:spotbugs-maven-plugin:check -Dspotbugs.xmlOutput=true -Dspotbugs.failOnError=true -Dspotbugs.includeTests=true  --file pom.xml -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
+      - mvn org.jacoco:jacoco-maven-plugin:prepare-agent package org.jacoco:jacoco-maven-plugin:report sonar:sonar -Dsonar.host.url=$SONAR_HOST -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=ujar-org:basics-rest-user-profile-crud -Dsonar.projectName=ujar-org:basics-rest-user-profile-crud --batch-mode  --file pom.xml -s settings.xml -Ddeployer.username=$DEPLOYER_USERNAME -Ddeployer.password=$DEPLOYER_PASSWORD
     when:
       branch:
         include:
@@ -41,7 +43,7 @@ steps:
 
   - name: publish-snapshot-package
     depends_on :
-      - test
+      - build
     image: maven:3-openjdk-17-slim
     volumes :
       - name : m2cache
@@ -65,7 +67,7 @@ steps:
 
   - name: publish-release-package
     depends_on :
-      - test
+      - build
     image: maven:3-openjdk-17-slim
     volumes :
       - name : m2cache
