@@ -5,11 +5,6 @@ build :
 spring :
   application :
     name : basics-rest-user-profile-crud
-  security :
-    users :
-      admin :
-        name : ${SECURITY_ADMIN_NAME:admin}
-        password : ${SECURITY_ADMIN_PASSWORD:admin}
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/sa_test_db}

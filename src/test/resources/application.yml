@@ -1,11 +1,6 @@
 spring :
   application :
     name : basics-rest-user-profile-crud
-  security :
-    users :
-      admin :
-        name : admin
-        password : admin
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     driver-class-name :  ${DATASOURCE_DRIVER:org.testcontainers.jdbc.ContainerDatabaseDriver}
