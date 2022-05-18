@@ -7,6 +7,8 @@ trigger:
   branch:
     - main
     - feature/*
+  event:
+    - push
 
 volumes:
   - name: m2cache
@@ -41,10 +43,6 @@ steps:
         include:
           - feature/*
           - main
-      event:
-        include:
-          - push
-          - pull_request
 
   - name: publish-snapshot-package
     depends_on :
@@ -65,10 +63,6 @@ steps:
         include:
           - feature/*
           - main
-      event:
-        include:
-          - push
-          - pull_request
 
   - name: publish-release-package
     depends_on :
@@ -108,10 +102,6 @@ steps:
         include:
           - feature/*
           - main
-      event:
-        include:
-          - push
-          - pull_request
 
 services:
   - name: db
