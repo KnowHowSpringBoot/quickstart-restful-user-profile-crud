@@ -1,10 +1,6 @@
-build :
-  version : @project.version@
-  description : "CRUD Sample"
-  relativePath : ${SWAGGER_RELATIVE_PATH:}
 spring :
   application :
-    name : basics-rest-user-profile-crud
+    name : basics-restful-user-profile-crud
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/sa_test_db}
@@ -27,19 +23,17 @@ spring :
 
   jackson :
     default-property-inclusion : NON_NULL
-    open-in-view : true
   lifecycle :
     timeout-per-shutdown-phase : ${TIMEOUT_PER_SHUTDOWN:20s}
 
 logging :
   level :
     ROOT : INFO
-    org.zalando.logbook.Logbook : TRACE
   pattern :
     console : "${spring.application.name} %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr([%X{transactionId},%X{traceId:-},%X{spanId:-}]){blue}[%thread] %clr(%-5level) %clr(%logger{36}){magenta} - %msg%n"
 
 server :
-  port : ${PORT:8080}
+  port : ${SERVER_PORT:8080}
   shutdown : graceful
 logbook :
   exclude :
@@ -48,8 +42,10 @@ logbook :
     - /swagger-ui/**
     - /swagger-resources/**
     - /metrics
-  filter.enabled : true
-  format.style : json
+  filter:
+    enabled : true
+  format:
+    style : json
   obfuscate :
     headers :
       - Authorization

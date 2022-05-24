@@ -1,4 +1,4 @@
-package org.ujar.basics.rest.userprofilecrud.dto;
+package org.ujar.basics.restful.userprofilecrud.dto;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;

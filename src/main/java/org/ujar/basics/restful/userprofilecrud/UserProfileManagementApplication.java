@@ -1,4 +1,4 @@
-package org.ujar.basics.rest.userprofilecrud;
+package org.ujar.basics.restful.userprofilecrud;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

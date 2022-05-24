@@ -1,4 +1,4 @@
-package org.ujar.basics.rest.userprofilecrud.web;
+package org.ujar.basics.restful.userprofilecrud.web;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ujar.basics.rest.userprofilecrud.dto.PageRequestDto;
-import org.ujar.basics.rest.userprofilecrud.dto.UserProfileDto;
-import org.ujar.basics.rest.userprofilecrud.entity.UserProfile;
-import org.ujar.basics.rest.userprofilecrud.repository.UserProfileRepository;
+import org.ujar.basics.restful.userprofilecrud.dto.PageRequestDto;
+import org.ujar.basics.restful.userprofilecrud.dto.UserProfileDto;
+import org.ujar.basics.restful.userprofilecrud.entity.UserProfile;
+import org.ujar.basics.restful.userprofilecrud.repository.UserProfileRepository;
 
 @RestController
 @Tag(name = "User profile controller", description = "API for user profiles management")
@@ -33,7 +33,7 @@ public class UserProfileController {
 
   @PostMapping
   public ResponseEntity<UserProfile> create(@RequestBody UserProfileDto request) {
-    var profile = new UserProfile(null, request.isActive());
+    var profile = new UserProfile(null, request.email(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
   }
 
@@ -50,7 +50,7 @@ public class UserProfileController {
 
   @PutMapping("/{id}")
   public ResponseEntity<UserProfile> update(@PathVariable Long id, @RequestBody UserProfileDto request) {
-    var profile = new UserProfile(id, request.isActive());
+    var profile = new UserProfile(id, request.email(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.OK);
   }
 

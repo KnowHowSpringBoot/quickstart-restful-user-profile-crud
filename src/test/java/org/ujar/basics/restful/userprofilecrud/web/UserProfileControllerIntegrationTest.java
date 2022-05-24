@@ -1,4 +1,4 @@
-package org.ujar.basics.rest.userprofilecrud.web;
+package org.ujar.basics.restful.userprofilecrud.web;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +20,24 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.ujar.basics.rest.userprofilecrud.entity.UserProfile;
+import org.ujar.basics.restful.userprofilecrud.entity.UserProfile;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserProfileControllerTest {
+class UserProfileControllerIntegrationTest {
 
   private final MockMvc mvc;
 
-  UserProfileControllerTest(@Autowired MockMvc mvc) {
+  UserProfileControllerIntegrationTest(@Autowired MockMvc mvc) {
     this.mvc = mvc;
   }
 
   @Test
-  void create() throws Exception {
+  @SneakyThrows
+  void create() {
     var profile = new UserProfile();
+    profile.setEmail("bazz@example.net");
     profile.setActive(true);
 
     var responseBody = createNewEntity(profile);
@@ -49,15 +52,17 @@ class UserProfileControllerTest {
   }
 
   @Test
-  void findById() throws Exception {
+  @SneakyThrows
+  void findById() {
     var gson = new Gson();
     var profile = new UserProfile();
+    profile.setEmail("bar@example.net");
     profile.setActive(true);
 
     var responseBody = createNewEntity(profile);
 
     MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles/" + responseBody.getId())
-        .accept(MediaType.APPLICATION_JSON))
+            .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
     responseBody = gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
@@ -67,20 +72,22 @@ class UserProfileControllerTest {
   }
 
   @Test
-  void findAll() throws Exception {
+  @SneakyThrows
+  void findAll() {
 
     var userProfile = new UserProfile();
     userProfile.setActive(true);
 
     var numberOfRecords = 3;
-
+    var emails = new String[] {"foo@example.net", "bar@example.net", "bazz@example.net"};
     var createdProfiles = new ArrayList<UserProfile>();
     for (int i = 0; i < numberOfRecords; i++) {
+      userProfile.setEmail(emails[i]);
       createdProfiles.add(createNewEntity(userProfile));
     }
 
     mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles")
-        .accept(MediaType.APPLICATION_JSON))
+            .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().json(
             "{\n"
@@ -128,8 +135,10 @@ class UserProfileControllerTest {
   }
 
   @Test
-  void update() throws Exception {
+  @SneakyThrows
+  void update() {
     var profile = new UserProfile();
+    profile.setEmail("foo@example.net");
     profile.setActive(true);
 
     var responseBody = createNewEntity(profile);
@@ -143,8 +152,9 @@ class UserProfileControllerTest {
   }
 
   @Test
-  void delete() throws Exception {
+  void delete() {
     var profile = new UserProfile();
+    profile.setEmail("bar@example.net");
     profile.setActive(true);
 
     var responseBody = createNewEntity(profile);
@@ -154,20 +164,22 @@ class UserProfileControllerTest {
     assertNull(responseBody);
   }
 
-  private UserProfile createNewEntity(UserProfile profile) throws Exception {
+  @SneakyThrows
+  private UserProfile createNewEntity(UserProfile profile) {
     var gson = new Gson();
 
     MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/v1/user-profiles")
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(gson.toJson(profile))
-        .accept(MediaType.APPLICATION_JSON))
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(gson.toJson(profile))
+            .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated())
         .andReturn();
 
     return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
   }
 
-  private UserProfile updateEntity(UserProfile profile) throws Exception {
+  @SneakyThrows
+  private UserProfile updateEntity(UserProfile profile) {
     var gson = new Gson();
     var id = profile.getId();
     MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/api/v1/user-profiles/" + id)
@@ -180,20 +192,22 @@ class UserProfileControllerTest {
     return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
   }
 
-  private UserProfile getEntityById(Long id) throws Exception {
+  @SneakyThrows
+  private UserProfile getEntityById(Long id) {
     var gson = new Gson();
 
     var result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles/" + id)
-        .accept(MediaType.APPLICATION_JSON))
+            .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
 
     return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
   }
 
-  private void deleteEntity(Long id) throws Exception {
+  @SneakyThrows
+  private void deleteEntity(Long id) {
     mvc.perform(MockMvcRequestBuilders.delete("/api/v1/user-profiles/" + id)
-        .accept(MediaType.APPLICATION_JSON))
+            .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
   }
