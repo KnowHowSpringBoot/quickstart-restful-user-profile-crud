@@ -1,5 +1,9 @@
 package org.ujar.basics.restful.userprofilecrud.web;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,7 @@ import org.ujar.basics.restful.userprofilecrud.dto.PageRequestDto;
 import org.ujar.basics.restful.userprofilecrud.dto.UserProfileDto;
 import org.ujar.basics.restful.userprofilecrud.entity.UserProfile;
 import org.ujar.basics.restful.userprofilecrud.repository.UserProfileRepository;
+import org.ujar.boot.starter.restful.web.dto.ErrorResponse;
 
 @RestController
 @Tag(name = "User profile controller", description = "API for user profiles management")
@@ -32,29 +37,89 @@ public class UserProfileController {
   private final UserProfileRepository profileRepository;
 
   @PostMapping
+  @Operation(
+      description = "Create user profile.",
+      responses = {
+          @ApiResponse(responseCode = "201",
+                       description = "Success"),
+          @ApiResponse(responseCode = "500",
+                       description = "Internal error",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+          @ApiResponse(responseCode = "400",
+                       description = "Bad request",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+      })
   public ResponseEntity<UserProfile> create(@RequestBody UserProfileDto request) {
     var profile = new UserProfile(null, request.email(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
   }
 
   @GetMapping("/{id}")
+  @Operation(
+      description = "Retrieve user profile by id.",
+      responses = {
+          @ApiResponse(responseCode = "200",
+                       description = "Success"),
+          @ApiResponse(responseCode = "500",
+                       description = "Internal error",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+          @ApiResponse(responseCode = "400",
+                       description = "Bad request",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+      })
   public ResponseEntity<UserProfile> findById(@PathVariable Long id) {
     return new ResponseEntity<>(profileRepository.findById(id).orElse(null), HttpStatus.OK);
   }
 
   @GetMapping
+  @Operation(
+      description = "Create user profile.",
+      responses = {
+          @ApiResponse(responseCode = "200",
+                       description = "Success"),
+          @ApiResponse(responseCode = "500",
+                       description = "Internal error",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+          @ApiResponse(responseCode = "400",
+                       description = "Bad request",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+      })
   public ResponseEntity<Page<UserProfile>> findAll(@ParameterObject @Valid PageRequestDto request) {
     var pageRequest = PageRequest.of(request.getPage(), request.getSize());
     return new ResponseEntity<>(profileRepository.findAll(pageRequest), HttpStatus.OK);
   }
 
   @PutMapping("/{id}")
+  @Operation(
+      description = "Update user profile.",
+      responses = {
+          @ApiResponse(responseCode = "200",
+                       description = "Success"),
+          @ApiResponse(responseCode = "500",
+                       description = "Internal error",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+          @ApiResponse(responseCode = "400",
+                       description = "Bad request",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+      })
   public ResponseEntity<UserProfile> update(@PathVariable Long id, @RequestBody UserProfileDto request) {
     var profile = new UserProfile(id, request.email(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.OK);
   }
 
   @DeleteMapping("/{id}")
+  @Operation(
+      description = "Delete user profile.",
+      responses = {
+          @ApiResponse(responseCode = "200",
+                       description = "Success"),
+          @ApiResponse(responseCode = "500",
+                       description = "Internal error",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+          @ApiResponse(responseCode = "400",
+                       description = "Bad request",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+      })
   public HttpStatus delete(@PathVariable Long id) {
     profileRepository.deleteById(id);
     return HttpStatus.OK;
