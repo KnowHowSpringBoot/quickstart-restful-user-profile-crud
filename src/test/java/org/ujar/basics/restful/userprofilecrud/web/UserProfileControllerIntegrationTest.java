@@ -3,7 +3,6 @@ package org.ujar.basics.restful.userprofilecrud.web;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -19,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.ujar.basics.restful.userprofilecrud.entity.UserProfile;
 
@@ -29,14 +29,14 @@ class UserProfileControllerIntegrationTest {
 
   private final MockMvc mvc;
 
-  UserProfileControllerIntegrationTest(@Autowired MockMvc mvc) {
+  UserProfileControllerIntegrationTest(@Autowired final MockMvc mvc) {
     this.mvc = mvc;
   }
 
   @Test
   @SneakyThrows
-  void create() {
-    var profile = new UserProfile();
+  void shouldCreateUserProfile() {
+    final var profile = new UserProfile();
     profile.setEmail("bazz@example.net");
     profile.setActive(true);
 
@@ -53,9 +53,9 @@ class UserProfileControllerIntegrationTest {
 
   @Test
   @SneakyThrows
-  void findById() {
-    var gson = new Gson();
-    var profile = new UserProfile();
+  void shouldFindProfileById() {
+    final var gson = new Gson();
+    final var profile = new UserProfile();
     profile.setEmail("bar@example.net");
     profile.setActive(true);
 
@@ -73,14 +73,13 @@ class UserProfileControllerIntegrationTest {
 
   @Test
   @SneakyThrows
-  void findAll() {
-
-    var userProfile = new UserProfile();
+  void shouldFindAllProfiles() {
+    final var userProfile = new UserProfile();
     userProfile.setActive(true);
 
-    var numberOfRecords = 3;
-    var emails = new String[] {"foo@example.net", "bar@example.net", "bazz@example.net"};
-    var createdProfiles = new ArrayList<UserProfile>();
+    final var numberOfRecords = 3;
+    final var emails = new String[] {"foo@example.net", "bar@example.net", "bazz@example.net"};
+    final var createdProfiles = new ArrayList<UserProfile>();
     for (int i = 0; i < numberOfRecords; i++) {
       userProfile.setEmail(emails[i]);
       createdProfiles.add(createNewEntity(userProfile));
@@ -90,44 +89,45 @@ class UserProfileControllerIntegrationTest {
             .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(content().json(
-            "{\n"
-            + "  \"content\":[\n"
-            + "    {\n"
-            + "      \"active\":true\n"
-            + "    },\n"
-            + "    {\n"
-            + "      \"active\":true\n"
-            + "    },\n"
-            + "    {\n"
-            + "      \"active\":true\n"
-            + "    }\n"
-            + "  ],\n"
-            + "  \"pageable\":{\n"
-            + "    \"sort\":{\n"
-            + "      \"empty\":true,\n"
-            + "      \"unsorted\":true,\n"
-            + "      \"sorted\":false\n"
-            + "    },\n"
-            + "    \"offset\":0,\n"
-            + "    \"pageSize\":10,\n"
-            + "    \"pageNumber\":0,\n"
-            + "    \"unpaged\":false,\n"
-            + "    \"paged\":true\n"
-            + "  },\n"
-            + "  \"last\":true,\n"
-            + "  \"totalElements\":3,\n"
-            + "  \"totalPages\":1,\n"
-            + "  \"size\":10,\n"
-            + "  \"number\":0,\n"
-            + "  \"sort\":{\n"
-            + "    \"empty\":true,\n"
-            + "    \"unsorted\":true,\n"
-            + "    \"sorted\":false\n"
-            + "  },\n"
-            + "  \"first\":true,\n"
-            + "  \"numberOfElements\":3,\n"
-            + "  \"empty\":false\n"
-            + "}"
+            """
+                {
+                  "content":[
+                    {
+                      "active":true
+                    },
+                    {
+                      "active":true
+                    },
+                    {
+                      "active":true
+                    }
+                  ],
+                  "pageable":{
+                    "sort":{
+                      "empty":true,
+                      "unsorted":true,
+                      "sorted":false
+                    },
+                    "offset":0,
+                    "pageSize":10,
+                    "pageNumber":0,
+                    "unpaged":false,
+                    "paged":true
+                  },
+                  "last":true,
+                  "totalElements":3,
+                  "totalPages":1,
+                  "size":10,
+                  "number":0,
+                  "sort":{
+                    "empty":true,
+                    "unsorted":true,
+                    "sorted":false
+                  },
+                  "first":true,
+                  "numberOfElements":3,
+                  "empty":false
+                }"""
         ));
     for (UserProfile singleEntity : createdProfiles) {
       deleteEntity(singleEntity.getId());
@@ -136,14 +136,14 @@ class UserProfileControllerIntegrationTest {
 
   @Test
   @SneakyThrows
-  void update() {
-    var profile = new UserProfile();
+  void shouldUpdateUserProfile() {
+    final var profile = new UserProfile();
     profile.setEmail("foo@example.net");
     profile.setActive(true);
 
     var responseBody = createNewEntity(profile);
 
-    responseBody = getEntityById(responseBody.getId());
+    responseBody = getEntityById(responseBody.getId(), status().isOk());
     responseBody.setActive(false);
     responseBody = updateEntity(responseBody);
     profile.setActive(false);
@@ -152,21 +152,20 @@ class UserProfileControllerIntegrationTest {
   }
 
   @Test
-  void delete() {
-    var profile = new UserProfile();
+  void shouldDeleteUserProfile() {
+    final var profile = new UserProfile();
     profile.setEmail("bar@example.net");
     profile.setActive(true);
 
-    var responseBody = createNewEntity(profile);
+    final var responseBody = createNewEntity(profile);
 
     deleteEntity(responseBody.getId());
-    responseBody = getEntityById(responseBody.getId());
-    assertNull(responseBody);
+    getEntityById(responseBody.getId(), status().isNotFound());
   }
 
   @SneakyThrows
-  private UserProfile createNewEntity(UserProfile profile) {
-    var gson = new Gson();
+  private UserProfile createNewEntity(final UserProfile profile) {
+    final var gson = new Gson();
 
     MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/v1/user-profiles")
             .contentType(MediaType.APPLICATION_JSON)
@@ -179,9 +178,9 @@ class UserProfileControllerIntegrationTest {
   }
 
   @SneakyThrows
-  private UserProfile updateEntity(UserProfile profile) {
-    var gson = new Gson();
-    var id = profile.getId();
+  private UserProfile updateEntity(final UserProfile profile) {
+    final var gson = new Gson();
+    final var id = profile.getId();
     MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/api/v1/user-profiles/" + id)
             .contentType(MediaType.APPLICATION_JSON)
             .content(gson.toJson(profile))
@@ -193,26 +192,26 @@ class UserProfileControllerIntegrationTest {
   }
 
   @SneakyThrows
-  private UserProfile getEntityById(Long id) {
-    var gson = new Gson();
+  private UserProfile getEntityById(final Long id, final ResultMatcher matcher) {
+    final var gson = new Gson();
 
-    var result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles/" + id)
+    final var result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles/" + id)
             .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
+        .andExpect(matcher)
         .andReturn();
 
     return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
   }
 
   @SneakyThrows
-  private void deleteEntity(Long id) {
+  private void deleteEntity(final Long id) {
     mvc.perform(MockMvcRequestBuilders.delete("/api/v1/user-profiles/" + id)
             .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andReturn();
   }
 
-  private void assertEntityEquals(UserProfile profile, UserProfile responseBody) {
+  private void assertEntityEquals(final UserProfile profile, final UserProfile responseBody) {
     assertNotNull(responseBody);
     assertNotNull(responseBody.getId());
     assertEquals(responseBody.isActive(), profile.isActive());

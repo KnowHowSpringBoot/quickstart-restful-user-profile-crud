@@ -20,6 +20,16 @@ spring :
     properties :
       hibernate.jdbc.time_zone : UTC
     show-sql : false
+  data :
+    web :
+      pageable :
+        default-page-size : 10 # Default page size.
+        max-page-size: 200 # Maximum page size to be accepted.
+        prefix: # General prefix to be prepended to the page number and page size parameters.
+        qualifier-delimiter: _ # Delimiter to be used between the qualifier and the actual page number and size properties.
+        size-parameter: limit # Page size parameter name.
+      sort:
+        sort-parameter: sort # Sort parameter name.
 
   jackson :
     default-property-inclusion : NON_NULL

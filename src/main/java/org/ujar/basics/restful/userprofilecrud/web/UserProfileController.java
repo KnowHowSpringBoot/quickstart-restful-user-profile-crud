@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ujar.basics.restful.userprofilecrud.dto.PageRequestDto;
 import org.ujar.basics.restful.userprofilecrud.dto.UserProfileDto;
 import org.ujar.basics.restful.userprofilecrud.entity.UserProfile;
 import org.ujar.basics.restful.userprofilecrud.repository.UserProfileRepository;
 import org.ujar.boot.starter.restful.web.dto.ErrorResponse;
+import org.ujar.boot.starter.restful.web.dto.PageRequestDto;
 
 @RestController
 @Tag(name = "User profile controller", description = "API for user profiles management")
@@ -50,7 +50,7 @@ public class UserProfileController {
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
       })
   public ResponseEntity<UserProfile> create(@RequestBody UserProfileDto request) {
-    var profile = new UserProfile(null, request.email(), request.isActive());
+    final var profile = new UserProfile(null, request.email(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
   }
 
@@ -66,14 +66,17 @@ public class UserProfileController {
           @ApiResponse(responseCode = "400",
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+          @ApiResponse(responseCode = "404",
+                       description = "Not found",
+                       content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
       })
-  public ResponseEntity<UserProfile> findById(@PathVariable Long id) {
-    return new ResponseEntity<>(profileRepository.findById(id).orElse(null), HttpStatus.OK);
+  public ResponseEntity<UserProfile> findById(@PathVariable final Long id) {
+    return ResponseEntity.of(profileRepository.findById(id));
   }
 
   @GetMapping
   @Operation(
-      description = "Create user profile.",
+      description = "Retrieve all user profiles (with pagination).",
       responses = {
           @ApiResponse(responseCode = "200",
                        description = "Success"),
@@ -85,7 +88,7 @@ public class UserProfileController {
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
       })
   public ResponseEntity<Page<UserProfile>> findAll(@ParameterObject @Valid PageRequestDto request) {
-    var pageRequest = PageRequest.of(request.getPage(), request.getSize());
+    final var pageRequest = PageRequest.of(request.getPage(), request.getLimit());
     return new ResponseEntity<>(profileRepository.findAll(pageRequest), HttpStatus.OK);
   }
 
@@ -102,8 +105,8 @@ public class UserProfileController {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
       })
-  public ResponseEntity<UserProfile> update(@PathVariable Long id, @RequestBody UserProfileDto request) {
-    var profile = new UserProfile(id, request.email(), request.isActive());
+  public ResponseEntity<UserProfile> update(@PathVariable final Long id, @RequestBody UserProfileDto request) {
+    final var profile = new UserProfile(id, request.email(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.OK);
   }
 
