@@ -62,6 +62,7 @@ Visit [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.h
 The code follows [Google Code Conventions](https://google.github.io/styleguide/javaguide.html) without exceptions. Code
 quality is measured by:
 
+- [Sonarqube](https://sonarqube.ujar.org/)
 - [PMD](https://pmd.github.io/)
 - [CheckStyle](https://checkstyle.sourceforge.io/)
 - [SpotBugs](https://spotbugs.github.io/)
