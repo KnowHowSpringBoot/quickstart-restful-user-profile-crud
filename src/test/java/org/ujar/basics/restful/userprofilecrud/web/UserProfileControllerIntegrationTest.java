@@ -147,6 +147,7 @@ class UserProfileControllerIntegrationTest {
     responseBody.setActive(false);
     responseBody = updateEntity(responseBody);
     profile.setActive(false);
+
     assertEntityEquals(profile, responseBody);
     deleteEntity(responseBody.getId());
   }

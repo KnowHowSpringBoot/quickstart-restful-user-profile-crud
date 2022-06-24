@@ -88,7 +88,7 @@ public class UserProfileController {
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
       })
   public ResponseEntity<Page<UserProfile>> findAll(@ParameterObject @Valid PageRequestDto request) {
-    final var pageRequest = PageRequest.of(request.getPage(), request.getLimit());
+    final var pageRequest = PageRequest.of(request.getPage(), request.getSize());
     return new ResponseEntity<>(profileRepository.findAll(pageRequest), HttpStatus.OK);
   }
 
