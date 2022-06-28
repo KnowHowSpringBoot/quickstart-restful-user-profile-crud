@@ -41,4 +41,13 @@ public class UserProfile {
   private String email;
 
   private boolean active;
+
+  @Override
+  public String toString() {
+    return "UserProfile{" +
+           "id=" + id +
+           ", email='" + email + '\'' +
+           ", active=" + active +
+           '}';
+  }
 }
