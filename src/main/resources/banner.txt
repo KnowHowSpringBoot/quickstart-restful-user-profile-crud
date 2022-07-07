@@ -3,6 +3,6 @@ ${AnsiColor.GREEN}  _   _       | |   __ _   _ __
 ${AnsiColor.GREEN} | | | |  _   | |  / _` | | '__|
 ${AnsiColor.GREEN} | |_| | | |__| | | (_| | | |   
 ${AnsiColor.GREEN}  \__,_|  \____/   \__,_| |_|   
-${AnsiColor.BRIGHT_BLUE} ===============================
-${AnsiColor.BRIGHT_BLUE}  User Profile CRUD REST API
-${AnsiColor.BRIGHT_BLUE} ===============================
+${AnsiColor.BLUE} ===============================
+${AnsiColor.BLUE}  User Profile CRUD REST API
+${AnsiColor.BLUE} ===============================
