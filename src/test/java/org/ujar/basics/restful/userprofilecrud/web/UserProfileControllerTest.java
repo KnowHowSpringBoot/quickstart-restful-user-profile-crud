@@ -25,11 +25,11 @@ import org.ujar.basics.restful.userprofilecrud.entity.UserProfile;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserProfileControllerIT {
+class UserProfileControllerTest {
 
   private final MockMvc mvc;
 
-  UserProfileControllerIT(@Autowired final MockMvc mvc) {
+  UserProfileControllerTest(@Autowired final MockMvc mvc) {
     this.mvc = mvc;
   }
 
