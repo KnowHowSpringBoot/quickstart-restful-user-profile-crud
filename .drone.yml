@@ -18,6 +18,7 @@ steps:
 
   - name: build
     image: docker-registry.ujar.org/ujar/maven:3-openjdk-17-slim
+    pull : if-not-exists
     volumes:
       - name: m2cache
         path: /root/.m2
@@ -48,6 +49,7 @@ steps:
     depends_on :
       - build
     image: docker-registry.ujar.org/ujar/maven:3-openjdk-17-slim
+    pull : if-not-exists
     volumes :
       - name : m2cache
         path : /root/.m2
@@ -69,6 +71,7 @@ steps:
     depends_on :
       - build
     image: docker-registry.ujar.org/ujar/maven:3-openjdk-17-slim
+    pull : if-not-exists
     volumes :
       - name : m2cache
         path : /root/.m2
