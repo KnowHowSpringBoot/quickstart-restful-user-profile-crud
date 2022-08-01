@@ -1,6 +1,5 @@
 package org.ujar.basics.restful.userprofilecrud.archunit;
 
-import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.fields;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import static com.tngtech.archunit.library.DependencyRules.NO_CLASSES_SHOULD_DEPEND_UPPER_PACKAGES;
 import static com.tngtech.archunit.library.GeneralCodingRules.ACCESS_STANDARD_STREAMS;
@@ -16,7 +15,6 @@ import com.tngtech.archunit.junit.ArchTest;
 import com.tngtech.archunit.junit.ArchTests;
 import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.CompositeArchRule;
-import org.slf4j.Logger;
 
 @AnalyzeClasses(packages = "org.ujar.basics.restful.userprofilecrud")
 class CodingRulesTest {
@@ -26,13 +24,7 @@ class CodingRulesTest {
   private final ArchRule noGenericExceptions = NO_CLASSES_SHOULD_THROW_GENERIC_EXCEPTIONS;
   @ArchTest
   private final ArchRule noJavaUtilLogging = NO_CLASSES_SHOULD_USE_JAVA_UTIL_LOGGING;
-  @ArchTest
-  private final ArchRule loggersShouldBePrivateStaticFinal =
-      fields().that().haveRawType(Logger.class)
-          .should().bePrivate()
-          .andShould().beStatic()
-          .andShould().beFinal()
-          .because("we agreed on this convention");
+
   @ArchTest
   private final ArchRule noJodatime = NO_CLASSES_SHOULD_USE_JODATIME;
   @ArchTest
