@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.ujar.boot.starter.logbook.LogbookJsonBodyFilter;
 import org.ujar.boot.starter.logbook.LogbookResponseOnStatus;
@@ -18,7 +17,6 @@ import org.ujar.boot.starter.logbook.LogbookResponseOnStatus;
 @EnableJpaRepositories({"org.ujar.basics.restful.userprofilecrud.repository"})
 @EnableJpaAuditing
 @EnableTransactionManagement
-@EnableSpringDataWebSupport
 public class ApplicationConfig {
 
   @Bean
