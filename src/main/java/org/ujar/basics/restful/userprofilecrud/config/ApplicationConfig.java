@@ -17,7 +17,7 @@ import org.ujar.boot.starter.logbook.LogbookResponseOnStatus;
 @EnableJpaRepositories({"org.ujar.basics.restful.userprofilecrud.repository"})
 @EnableJpaAuditing
 @EnableTransactionManagement
-public class ApplicationConfig {
+class ApplicationConfig {
 
   @Bean
   SpringLiquibase liquibase(@Autowired DataSource dataSource) {

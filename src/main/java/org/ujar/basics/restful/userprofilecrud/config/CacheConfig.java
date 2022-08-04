@@ -15,11 +15,11 @@ import org.ujar.boot.starter.cache.CacheProperties;
 
 @Configuration
 @EnableCaching
-public class CacheConfig {
+class CacheConfig {
 
   private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
 
-  public CacheConfig(CacheProperties cacheProperties) {
+  CacheConfig(CacheProperties cacheProperties) {
     var ehcacheProperties = cacheProperties.getEhcache();
     jcacheConfiguration =
         Eh107Configuration.fromEhcacheCacheConfiguration(
@@ -37,12 +37,12 @@ public class CacheConfig {
   }
 
   @Bean
-  public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(javax.cache.CacheManager cacheManager) {
+  HibernatePropertiesCustomizer hibernatePropertiesCustomizer(javax.cache.CacheManager cacheManager) {
     return hibernateProperties -> hibernateProperties.put(ConfigSettings.CACHE_MANAGER, cacheManager);
   }
 
   @Bean
-  public JCacheManagerCustomizer cacheManagerCustomizer() {
+  JCacheManagerCustomizer cacheManagerCustomizer() {
     return cm -> {
       createCache(cm, org.ujar.basics.restful.userprofilecrud.entity.UserProfile.class.getName());
     };
