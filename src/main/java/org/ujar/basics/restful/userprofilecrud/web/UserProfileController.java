@@ -49,7 +49,7 @@ public class UserProfileController {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
       })
-  public ResponseEntity<UserProfile> create(@RequestBody UserProfileDto request) {
+  ResponseEntity<UserProfile> create(@RequestBody UserProfileDto request) {
     final var profile = new UserProfile(null, request.email(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
   }
@@ -70,7 +70,7 @@ public class UserProfileController {
                        description = "Not found",
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
       })
-  public ResponseEntity<UserProfile> findById(@PathVariable final Long id) {
+  ResponseEntity<UserProfile> findById(@PathVariable final Long id) {
     return ResponseEntity.of(profileRepository.findById(id));
   }
 
@@ -87,7 +87,7 @@ public class UserProfileController {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
       })
-  public ResponseEntity<Page<UserProfile>> findAll(@ParameterObject @Valid PageRequestDto request) {
+  ResponseEntity<Page<UserProfile>> findAll(@ParameterObject @Valid PageRequestDto request) {
     final var pageRequest = PageRequest.of(request.getPage(), request.getSize());
     return new ResponseEntity<>(profileRepository.findAll(pageRequest), HttpStatus.OK);
   }
@@ -105,7 +105,7 @@ public class UserProfileController {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
       })
-  public ResponseEntity<UserProfile> update(@PathVariable final Long id, @RequestBody UserProfileDto request) {
+  ResponseEntity<UserProfile> update(@PathVariable final Long id, @RequestBody UserProfileDto request) {
     final var profile = new UserProfile(id, request.email(), request.isActive());
     return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.OK);
   }
@@ -123,7 +123,7 @@ public class UserProfileController {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
       })
-  public HttpStatus delete(@PathVariable Long id) {
+  HttpStatus delete(@PathVariable Long id) {
     profileRepository.deleteById(id);
     return HttpStatus.OK;
   }
