@@ -37,7 +37,7 @@ class UserProfileControllerTest {
     profile.setEmail("bazz@example.net");
     profile.setActive(true);
 
-    final var responseBody = createNewEntity(profile);
+    var responseBody = createNewEntity(profile);
     assertEntityEquals(profile, responseBody);
     deleteEntity(responseBody.getId());
 
@@ -56,7 +56,7 @@ class UserProfileControllerTest {
     profile.setEmail("bar@example.net");
     profile.setActive(true);
 
-    final var responseBody = createNewEntity(profile);
+    var responseBody = createNewEntity(profile);
 
     MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles/" + responseBody.getId())
             .accept(MediaType.APPLICATION_JSON))
@@ -138,7 +138,7 @@ class UserProfileControllerTest {
     profile.setEmail("foo@example.net");
     profile.setActive(true);
 
-    final var responseBody = createNewEntity(profile);
+    var responseBody = createNewEntity(profile);
 
     responseBody = getEntityById(responseBody.getId(), status().isOk());
     responseBody.setActive(false);
@@ -155,7 +155,7 @@ class UserProfileControllerTest {
     profile.setEmail("bar@example.net");
     profile.setActive(true);
 
-    final var responseBody = createNewEntity(profile);
+    var responseBody = createNewEntity(profile);
 
     deleteEntity(responseBody.getId());
     getEntityById(responseBody.getId(), status().isNotFound());
