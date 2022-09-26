@@ -110,7 +110,7 @@ steps:
 
 services:
   - name: db
-    image: postgres:13.5
+    image: postgres:13.8
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
