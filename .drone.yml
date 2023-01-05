@@ -13,11 +13,11 @@ trigger:
 volumes:
   - name: m2cache
     host:
-      path: /volume1/m2cache
+      path: /app/.m2
 steps:
 
   - name: build
-    image: docker-registry.ujar.org/ujar/maven:3-openjdk-17-slim
+    image: docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes:
       - name: m2cache
@@ -48,7 +48,7 @@ steps:
   - name: publish-snapshot-package
     depends_on :
       - build
-    image: docker-registry.ujar.org/ujar/maven:3-openjdk-17-slim
+    image: docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -70,7 +70,7 @@ steps:
   - name: publish-release-package
     depends_on :
       - build
-    image: docker-registry.ujar.org/ujar/maven:3-openjdk-17-slim
+    image: docker-registry.c2a2.com/ujar/maven:3-openjdk-17-slim
     pull : if-not-exists
     volumes :
       - name : m2cache
@@ -97,8 +97,8 @@ steps:
         from_secret: DOCKER_USERNAME
       password:
         from_secret: DOCKER_PASSWORD
-      repo: docker-registry.ujar.org/ujar/basics-restful-user-profile-crud
-      registry: docker-registry.ujar.org
+      repo: docker-registry.c2a2.com/ujar/basics-restful-user-profile-crud
+      registry: docker-registry.c2a2.com
       tags :
         - latest
     when:
