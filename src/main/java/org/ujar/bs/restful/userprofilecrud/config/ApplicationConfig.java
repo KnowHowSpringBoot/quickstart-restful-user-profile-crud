@@ -1,4 +1,4 @@
-package org.ujar.basics.restful.userprofilecrud.config;
+package org.ujar.bs.rst.userprofilecrud.config;
 
 import javax.sql.DataSource;
 import liquibase.integration.spring.SpringLiquibase;
@@ -14,7 +14,7 @@ import org.ujar.boot.starter.logbook.LogbookResponseOnStatus;
 @Configuration
 @LogbookResponseOnStatus
 @LogbookJsonBodyFilter
-@EnableJpaRepositories({"org.ujar.basics.restful.userprofilecrud.repository"})
+@EnableJpaRepositories({"org.ujar.bs.rst.userprofilecrud.repository"})
 @EnableJpaAuditing
 @EnableTransactionManagement
 class ApplicationConfig {

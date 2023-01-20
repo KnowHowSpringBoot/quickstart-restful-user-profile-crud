@@ -1,4 +1,4 @@
-package org.ujar.basics.restful.userprofilecrud.entity;
+package org.ujar.bs.rst.userprofilecrud.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

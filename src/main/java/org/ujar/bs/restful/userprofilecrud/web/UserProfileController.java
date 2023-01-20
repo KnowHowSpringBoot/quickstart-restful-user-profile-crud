@@ -1,4 +1,4 @@
-package org.ujar.basics.restful.userprofilecrud.web;
+package org.ujar.bs.rst.userprofilecrud.web;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ujar.basics.restful.userprofilecrud.entity.UserProfile;
-import org.ujar.basics.restful.userprofilecrud.repository.UserProfileRepository;
-import org.ujar.basics.restful.userprofilecrud.web.dto.UserProfileDto;
+import org.ujar.bs.rst.userprofilecrud.entity.UserProfile;
+import org.ujar.bs.rst.userprofilecrud.repository.UserProfileRepository;
+import org.ujar.bs.rst.userprofilecrud.web.dto.UserProfileDto;
 import org.ujar.boot.starter.restful.web.dto.ErrorResponse;
 import org.ujar.boot.starter.restful.web.dto.PageRequestDto;
 

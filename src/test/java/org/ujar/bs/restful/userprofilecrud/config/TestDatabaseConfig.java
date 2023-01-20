@@ -1,4 +1,4 @@
-package org.ujar.basics.restful.userprofilecrud.config;
+package org.ujar.bs.rst.userprofilecrud.config;
 
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

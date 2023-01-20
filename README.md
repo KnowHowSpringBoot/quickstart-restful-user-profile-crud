@@ -1,6 +1,6 @@
 # User Profile CRUD - Sample Restful App
 
-[![Build Status](https://drone.c2a2.com/api/badges/ujar-org/basics-restful-user-profile-crud/status.svg?ref=refs/heads/main)](https://drone.c2a2.com/ujar-org/basics-restful-user-profile-crud)
+[![Build Status](https://drone.c2a2.com/api/badges/ujar-org/bs-rst-user-profile-crud/status.svg?ref=refs/heads/main)](https://drone.c2a2.com/ujar-org/bs-rst-user-profile-crud)
 
 Minimal Spring Boot based RESTful CRUD example, which manages user profile entity (including Swagger UI).
 
@@ -29,8 +29,8 @@ This application is a [Spring Boot](https://spring.io/guides/gs/spring-boot) app
 using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
 
 ```
-git clone https://github.com/ujar-org/basics-restful-user-profile-crud.git
-cd basics-restful-user-profile-crud
+git clone https://github.com/ujar-org/bs-rst-user-profile-crud.git
+cd bs-rst-user-profile-crud
 ./mvnw package
 java -jar target/*.jar
 ```
@@ -42,7 +42,7 @@ You can then access Swagger UI here: http://localhost:8080/swagger-ui.html
 1) On the command line
 
 ```
-git clone https://github.com/ujar-org/basics-restful-user-profile-crud.git
+git clone https://github.com/ujar-org/bs-rst-user-profile-crud.git
 ```
 
 2) Inside IDE
@@ -61,7 +61,7 @@ Visit [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.h
 The code follows [Google Code Conventions](https://google.github.io/styleguide/javaguide.html). Code
 quality is measured by:
 
-- [Sonarqube](https://sonarqube.c2a2.com/dashboard?id=ujar-org%3Abasics-restful-user-profile-crud)
+- [Sonarqube](https://sonarqube.c2a2.com/dashboard?id=ujar-org%3Abs-rst-user-profile-crud)
 - [PMD](https://pmd.github.io/)
 - [CheckStyle](https://checkstyle.sourceforge.io/)
 - [SpotBugs](https://spotbugs.github.io/)

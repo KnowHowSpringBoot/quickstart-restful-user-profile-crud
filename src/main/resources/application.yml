@@ -17,7 +17,7 @@ info :
 
 spring :
   application :
-    name : basics-restful-user-profile-crud
+    name : bs-rst-user-profile-crud
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/sa_test_db}

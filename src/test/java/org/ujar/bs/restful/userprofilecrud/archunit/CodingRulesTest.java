@@ -1,4 +1,4 @@
-package org.ujar.basics.restful.userprofilecrud.archunit;
+package org.ujar.bs.rst.userprofilecrud.archunit;
 
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 import static com.tngtech.archunit.library.DependencyRules.NO_CLASSES_SHOULD_DEPEND_UPPER_PACKAGES;
@@ -16,7 +16,7 @@ import com.tngtech.archunit.junit.ArchTests;
 import com.tngtech.archunit.lang.ArchRule;
 import com.tngtech.archunit.lang.CompositeArchRule;
 
-@AnalyzeClasses(packages = "org.ujar.basics.restful.userprofilecrud")
+@AnalyzeClasses(packages = "org.ujar.bs.rst.userprofilecrud")
 class CodingRulesTest {
   @ArchTest
   private final ArchRule noClassesShouldAccessStandardStreams = NO_CLASSES_SHOULD_ACCESS_STANDARD_STREAMS;

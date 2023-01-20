@@ -1,4 +1,4 @@
-package org.ujar.basics.restful.userprofilecrud.config;
+package org.ujar.bs.rst.userprofilecrud.config;
 
 import java.time.Duration;
 import org.ehcache.config.builders.CacheConfigurationBuilder;
@@ -44,7 +44,7 @@ class CacheConfig {
   @Bean
   JCacheManagerCustomizer cacheManagerCustomizer() {
     return cm -> {
-      createCache(cm, org.ujar.basics.restful.userprofilecrud.entity.UserProfile.class.getName());
+      createCache(cm, org.ujar.bs.rst.userprofilecrud.entity.UserProfile.class.getName());
     };
   }
 

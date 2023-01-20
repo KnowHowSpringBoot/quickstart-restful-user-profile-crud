@@ -1,4 +1,4 @@
-package org.ujar.basics.restful.userprofilecrud.web;
+package org.ujar.bs.rst.userprofilecrud.web;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.ujar.basics.restful.userprofilecrud.entity.UserProfile;
+import org.ujar.bs.rst.userprofilecrud.entity.UserProfile;
 
 @SpringBootTest
 @AutoConfigureMockMvc

@@ -5,7 +5,7 @@ build :
 
 spring :
   application :
-    name : basics-restful-user-profile-crud
+    name : bs-rst-user-profile-crud
   devtools :
     add-properties : false
     restart :

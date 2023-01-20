@@ -1,4 +1,4 @@
-package org.ujar.basics.restful.userprofilecrud;
+package org.ujar.bs.rst.userprofilecrud;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
