@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.ujar.boot.starter.restful.web.dto.ErrorResponse;
+import org.ujar.boot.starter.restful.web.dto.PageRequestDto;
 import org.ujar.bs.rst.userprofilecrud.entity.UserProfile;
 import org.ujar.bs.rst.userprofilecrud.repository.UserProfileRepository;
 import org.ujar.bs.rst.userprofilecrud.web.dto.UserProfileDto;
-import org.ujar.boot.starter.restful.web.dto.ErrorResponse;
-import org.ujar.boot.starter.restful.web.dto.PageRequestDto;
 
 @RestController
 @Tag(name = "User profile controller", description = "API for user profiles management")
