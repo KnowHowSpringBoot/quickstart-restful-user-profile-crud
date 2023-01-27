@@ -1,7 +1,5 @@
 # User Profile CRUD - Sample Restful App
 
-[![Build Status](http://iaolg9igjr3tghootxslfe.webrelay.io/api/badges/ujar-org/bs-rst-user-profile-crud/status.svg?ref=refs/heads/main)](http://iaolg9igjr3tghootxslfe.webrelay.io/ujar-org/bs-rst-user-profile-crud)
-
 Minimal Spring Boot based RESTful CRUD example, which manages user profile entity (including Swagger UI).
 
 ## Technology stack
