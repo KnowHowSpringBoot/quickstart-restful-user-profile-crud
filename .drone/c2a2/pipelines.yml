@@ -90,7 +90,7 @@ steps :
       - publish-snapshot-package
     image : plugins/docker
     settings :
-      dockerfile : Dockerfile
+      dockerfile : .drone/c2a2/Dockerfile
       context : ./
       storage_driver : vfs
       username :
@@ -107,11 +107,3 @@ steps :
           - feature/*
           - develop
           - main
-
-services :
-  - name : db
-    image : postgres:13.8
-    environment :
-      POSTGRES_USER : postgres
-      POSTGRES_PASSWORD : postgres
-      POSTGRES_DB : sa_test_db
