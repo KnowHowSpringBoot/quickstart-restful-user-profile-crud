@@ -129,6 +129,8 @@ type : docker
 trigger :
   event :
     - custom
+  branch:
+    - develop
 
 volumes :
   - name : m2cache
