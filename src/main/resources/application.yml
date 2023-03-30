@@ -1,10 +1,11 @@
-build :
-  description : '@project.description@'
-  relative-path : ${SWAGGER_UI_RELATIVE_PATH:}
-  version : '@project.version@'
+ujar :
+  build :
+    description : '@project.description@'
+    relative-path : ${SWAGGER_UI_RELATIVE_PATH:}
+    version : '@project.version@'
 
 git :
-  commit : '@git.commit.id@'
+  commit : '@git.commit.id.abbrev@'
   build_time : '@git.build.time@'
 
 info :
@@ -17,7 +18,9 @@ info :
 
 spring :
   application :
-    name : bs-rst-user-profile-crud
+    name : quickstart-restful-user-profile-crud
+  liquibase :
+    change-log : migrations/master.xml
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/sa_test_db}
@@ -31,7 +34,7 @@ spring :
     hibernate :
       ddl-auto : none
       naming :
-        physical-strategy : org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        physical-strategy : org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         implicit-strategy : org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     open-in-view : true
     properties :
@@ -63,29 +66,10 @@ spring :
 logging :
   level :
     ROOT : ${LOGGING_LEVEL_ROOT:INFO}
-    org.zalando.logbook.Logbook : TRACE
 
 server :
   port : ${SERVER_PORT:8080}
   shutdown : graceful
-logbook :
-  exclude :
-    - /actuator/**
-    - /v3/**
-    - /swagger-ui/**
-    - /swagger-resources/**
-  filter :
-    enabled : true
-  format :
-    style : json
-  obfuscate :
-    headers :
-      - Authorization
-      - X-Secret
-    parameters :
-      - access_token
-      - password
-  minimum-status : ${MINIMUM_STATUS_LOG_BODY:400}
 
 management :
   health :
@@ -109,13 +93,13 @@ management :
       show-details : always
       probes :
         enabled : true
-    prometheus :
-      enabled : true
     info :
+      enabled : true
+    prometheus :
       enabled : true
 
 springdoc :
-  show-actuator : true
+  show-actuator : false
   swagger-ui :
     config-url : ${SWAGGER_UI_RELATIVE_PATH:/}v3/api-docs/swagger-config
     url : ${SWAGGER_UI_RELATIVE_PATH:/}v3/api-docs

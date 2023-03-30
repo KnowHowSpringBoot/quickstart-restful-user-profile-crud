@@ -1,17 +1,20 @@
-build :
-  description : '@project.description@'
-  relative-path : ''
-  version : '@project.version@'
+ujar :
+  build :
+    description : '@project.description@'
+    relative-path : ''
+    version : '@project.version@'
 
 spring :
   application :
-    name : bs-rst-user-profile-crud
+    name : quickstart-restful-user-profile-crud
   devtools :
     add-properties : false
     restart :
       enabled : false
     livereload :
       enabled : false
+  liquibase :
+    change-log : migrations/master.xml
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
     driver-class-name : ${DATASOURCE_DRIVER:org.h2.Driver}
@@ -25,7 +28,7 @@ spring :
     hibernate :
       ddl-auto : none
       naming :
-        physical-strategy : org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        physical-strategy : org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
         implicit-strategy : org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     open-in-view : true
     properties :
