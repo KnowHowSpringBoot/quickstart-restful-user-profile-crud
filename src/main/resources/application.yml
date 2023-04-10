@@ -23,7 +23,7 @@ spring :
     change-log : migrations/master.xml
   datasource :
     type : com.zaxxer.hikari.HikariDataSource
-    url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/sa_test_db}
+    url : ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/svc_testing_db}
     username : ${DATASOURCE_USERNAME:postgres}
     password : ${DATASOURCE_PASSWORD:postgres}
     driver-class-name : ${DATASOURCE_DRIVER:org.postgresql.Driver}

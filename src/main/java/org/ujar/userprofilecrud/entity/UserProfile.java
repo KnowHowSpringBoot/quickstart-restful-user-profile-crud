@@ -23,12 +23,14 @@ import lombok.Setter;
 @Table(name = UserProfile.TABLE_NAME)
 public class UserProfile {
 
-  protected static final String TABLE_NAME = "basics_rest_user_profiles";
+  protected static final String TABLE_NAME = "quickstart_restful_user_profiles";
 
   @Id
   @SequenceGenerator(
       name = "user_profile_id_seq",
-      sequenceName = "user_profile_id_seq"
+      sequenceName = "user_profile_id_seq",
+      initialValue = 1,
+      allocationSize = 1
   )
   @GeneratedValue(
       strategy = GenerationType.SEQUENCE,
