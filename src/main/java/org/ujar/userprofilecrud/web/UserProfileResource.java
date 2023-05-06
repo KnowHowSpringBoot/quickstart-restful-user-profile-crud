@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.ujar.boot.restful.web.ErrorResponse;
+import org.ujar.boot.restful.web.ApiError;
 import org.ujar.boot.restful.web.PaginationRequest;
 import org.ujar.userprofilecrud.entity.UserProfile;
 import org.ujar.userprofilecrud.repository.UserProfileRepository;
@@ -44,10 +44,10 @@ class UserProfileResource {
                        description = "Success"),
           @ApiResponse(responseCode = "500",
                        description = "Internal error",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
           @ApiResponse(responseCode = "400",
                        description = "Bad request",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
       })
   ResponseEntity<UserProfile> create(@RequestBody final UserProfileDto request) {
     final var profile = new UserProfile(null, request.email(), request.isActive());
@@ -62,13 +62,13 @@ class UserProfileResource {
                        description = "Success"),
           @ApiResponse(responseCode = "500",
                        description = "Internal error",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
           @ApiResponse(responseCode = "400",
                        description = "Bad request",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
           @ApiResponse(responseCode = "404",
                        description = "Not found",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+                       content = @Content(schema = @Schema(implementation = ApiError.class)))
       })
   ResponseEntity<UserProfile> findById(@PathVariable final Long id) {
     return ResponseEntity.of(profileRepository.findById(id));
@@ -82,10 +82,10 @@ class UserProfileResource {
                        description = "Success"),
           @ApiResponse(responseCode = "500",
                        description = "Internal error",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
           @ApiResponse(responseCode = "400",
                        description = "Bad request",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
       })
   ResponseEntity<Page<UserProfile>> findAll(@ParameterObject @Valid final PaginationRequest request) {
     final var pageRequest = PageRequest.of(request.getPage(), request.getSize());
@@ -100,10 +100,10 @@ class UserProfileResource {
                        description = "Success"),
           @ApiResponse(responseCode = "500",
                        description = "Internal error",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
           @ApiResponse(responseCode = "400",
                        description = "Bad request",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
       })
   ResponseEntity<UserProfile> update(@PathVariable final Long id, @RequestBody final UserProfileDto request) {
     final var profile = new UserProfile(id, request.email(), request.isActive());
@@ -118,10 +118,10 @@ class UserProfileResource {
                        description = "Success"),
           @ApiResponse(responseCode = "500",
                        description = "Internal error",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
           @ApiResponse(responseCode = "400",
                        description = "Bad request",
-                       content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
       })
   HttpStatus delete(@PathVariable final Long id) {
     profileRepository.deleteById(id);
