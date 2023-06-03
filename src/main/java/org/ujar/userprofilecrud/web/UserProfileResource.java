@@ -1,6 +1,8 @@
 package org.ujar.userprofilecrud.web;
 
-import jakarta.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,9 +10,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,27 +20,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.ujar.boot.restful.web.ApiError;
-import org.ujar.boot.restful.web.PaginationRequest;
 import org.ujar.userprofilecrud.entity.UserProfile;
 import org.ujar.userprofilecrud.repository.UserProfileRepository;
 
 @RestController
 @Tag(name = "User profiles", description = "API endpoints for managing user profile entity.")
-@RequestMapping("/api/v1/user-profiles")
 @Validated
+@RequestMapping("/api/v1/user-profiles")
 @RequiredArgsConstructor
 class UserProfileResource {
 
-  private final UserProfileRepository profileRepository;
+  private final UserProfileRepository userProfileRepository;
 
   @PostMapping
   @Operation(
       description = "Create a new user profile.",
       responses = {
           @ApiResponse(responseCode = "201",
-                       description = "Success"),
+                       description = "Created"),
           @ApiResponse(responseCode = "500",
                        description = "Internal error",
                        content = @Content(schema = @Schema(implementation = ApiError.class))),
@@ -49,9 +48,9 @@ class UserProfileResource {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ApiError.class))),
       })
-  ResponseEntity<UserProfile> create(@RequestBody final UserProfileDto request) {
-    final var profile = new UserProfile(null, request.email(), request.isActive());
-    return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
+  ResponseEntity<UserProfile> create(@RequestBody UserProfileRequest userProfileRequest) {
+    UserProfile userProfile = userProfileRepository.save(new UserProfile(userProfileRequest.email(), userProfileRequest.active()));
+    return new ResponseEntity<>(userProfile, HttpStatus.CREATED);
   }
 
   @GetMapping("/{id}")
@@ -70,8 +69,9 @@ class UserProfileResource {
                        description = "Not found",
                        content = @Content(schema = @Schema(implementation = ApiError.class)))
       })
-  ResponseEntity<UserProfile> findById(@PathVariable final Long id) {
-    return ResponseEntity.of(profileRepository.findById(id));
+  ResponseEntity<UserProfile> findById(@PathVariable("id") long id) {
+    Optional<UserProfile> userProfileData = userProfileRepository.findById(id);
+    return userProfileData.map(userProfile -> new ResponseEntity<>(userProfile, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
   }
 
   @GetMapping
@@ -87,9 +87,20 @@ class UserProfileResource {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ApiError.class))),
       })
-  ResponseEntity<Page<UserProfile>> findAll(@ParameterObject @Valid final PaginationRequest request) {
-    final var pageRequest = PageRequest.of(request.getPage(), request.getSize());
-    return new ResponseEntity<>(profileRepository.findAll(pageRequest), HttpStatus.OK);
+  ResponseEntity<List<UserProfile>> findAll(@RequestParam(required = false) String email) {
+    List<UserProfile> userProfiles = new ArrayList<>();
+
+    if (email == null) {
+      userProfiles.addAll(userProfileRepository.findAll());
+    } else {
+      userProfiles.addAll(userProfileRepository.findByEmailContaining(email));
+    }
+
+    if (userProfiles.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    return new ResponseEntity<>(userProfiles, HttpStatus.OK);
   }
 
   @PutMapping("/{id}")
@@ -105,14 +116,47 @@ class UserProfileResource {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ApiError.class))),
       })
-  ResponseEntity<UserProfile> update(@PathVariable final Long id, @RequestBody final UserProfileDto request) {
-    final var profile = new UserProfile(id, request.email(), request.isActive());
-    return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.OK);
+  ResponseEntity<UserProfile> update(@PathVariable("id") long id, @RequestBody UserProfileRequest userProfileRequest) {
+    Optional<UserProfile> userProfileData = userProfileRepository.findById(id);
+
+    if (userProfileData.isPresent()) {
+      UserProfile userProfile = userProfileData.get();
+      userProfile.setEmail(userProfileRequest.email());
+      userProfile.setActive(userProfileRequest.active());
+      return new ResponseEntity<>(userProfileRepository.save(userProfile), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
   }
 
   @DeleteMapping("/{id}")
+  ResponseEntity<HttpStatus> delete(@PathVariable("id") long id) {
+    userProfileRepository.deleteById(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+  }
+
+  @DeleteMapping
   @Operation(
-      description = "Delete user profile.",
+      description = "Delete all user profiles.",
+      responses = {
+          @ApiResponse(responseCode = "204",
+                       description = "No Content"),
+          @ApiResponse(responseCode = "500",
+                       description = "Internal error",
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
+          @ApiResponse(responseCode = "400",
+                       description = "Bad request",
+                       content = @Content(schema = @Schema(implementation = ApiError.class))),
+      })
+  ResponseEntity<HttpStatus> deleteAll() {
+    userProfileRepository.deleteAll();
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
+
+  @GetMapping("/active")
+  @Operation(
+      description = "Get all active profiles.",
       responses = {
           @ApiResponse(responseCode = "200",
                        description = "Success"),
@@ -123,14 +167,15 @@ class UserProfileResource {
                        description = "Bad request",
                        content = @Content(schema = @Schema(implementation = ApiError.class))),
       })
-  HttpStatus delete(@PathVariable final Long id) {
-    profileRepository.deleteById(id);
-    return HttpStatus.OK;
+  ResponseEntity<List<UserProfile>> findByActive() {
+    List<UserProfile> userProfiles = userProfileRepository.findByActive(true);
+
+    if (userProfiles.isEmpty()) {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    return new ResponseEntity<>(userProfiles, HttpStatus.OK);
   }
 
-  record UserProfileDto(String email, boolean active) {
-    public boolean isActive() {
-      return active();
-    }
+  record UserProfileRequest(String email, boolean active) {
   }
 }

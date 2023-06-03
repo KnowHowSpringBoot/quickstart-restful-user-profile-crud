@@ -1,212 +1,176 @@
 package org.ujar.userprofilecrud.web;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
-import com.google.gson.Gson;
-import lombok.SneakyThrows;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.ujar.userprofilecrud.entity.UserProfile;
+import org.ujar.userprofilecrud.repository.UserProfileRepository;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-record UserProfileResourceTest(@Autowired MockMvc mvc) {
+@WebMvcTest(value = UserProfileResource.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+class UserProfileResourceTest {
+  @MockBean
+  private UserProfileRepository userProfileRepository;
 
-  @Test
-  @SneakyThrows
-  void shouldCreateUserProfile() {
-    final var profile = new UserProfile();
-    profile.setEmail("bazz@example.net");
-    profile.setActive(true);
+  private final MockMvc mockMvc;
 
-    var responseBody = createNewEntity(profile);
-    assertEntityEquals(profile, responseBody);
-    deleteEntity(responseBody.getId());
+  private final ObjectMapper objectMapper;
 
-    profile.setActive(false);
-
-    responseBody = createNewEntity(profile);
-    assertEntityEquals(profile, responseBody);
-    deleteEntity(responseBody.getId());
+  @Autowired
+  public UserProfileResourceTest(MockMvc mockMvc, ObjectMapper objectMapper) {
+    this.mockMvc = mockMvc;
+    this.objectMapper = objectMapper;
   }
 
   @Test
-  @SneakyThrows
-  void shouldFindProfileById() {
-    final var gson = new Gson();
-    final var profile = new UserProfile();
-    profile.setEmail("bar@example.net");
-    profile.setActive(true);
+  void shouldCreateUserProfile() throws Exception {
+    UserProfile userProfile = new UserProfile(1L, "spring@example.com", true);
 
-    var responseBody = createNewEntity(profile);
-
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles/" + responseBody.getId())
-            .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andReturn();
-    responseBody = gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
-
-    assertEntityEquals(profile, responseBody);
-    deleteEntity(responseBody.getId());
-  }
-
-  @Test
-  @SneakyThrows
-  void shouldFindAllProfiles() {
-    final var userProfile = new UserProfile();
-    userProfile.setActive(true);
-
-    final var numberOfRecords = 3;
-    final var emails = new String[] {"foo@example.net", "bar@example.net", "bazz@example.net"};
-    final var createdProfiles = new ArrayList<UserProfile>();
-    for (int i = 0; i < numberOfRecords; i++) {
-      userProfile.setEmail(emails[i]);
-      createdProfiles.add(createNewEntity(userProfile));
-    }
-
-    mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles")
-            .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isOk())
-        .andExpect(content().json(
-            """
-                {
-                  "content":[
-                    {
-                      "active":true
-                    },
-                    {
-                      "active":true
-                    },
-                    {
-                      "active":true
-                    }
-                  ],
-                  "pageable":{
-                    "sort":{
-                      "empty":true,
-                      "unsorted":true,
-                      "sorted":false
-                    },
-                    "offset":0,
-                    "pageSize":10,
-                    "pageNumber":0,
-                    "unpaged":false,
-                    "paged":true
-                  },
-                  "last":true,
-                  "totalElements":3,
-                  "totalPages":1,
-                  "size":10,
-                  "number":0,
-                  "sort":{
-                    "empty":true,
-                    "unsorted":true,
-                    "sorted":false
-                  },
-                  "first":true,
-                  "numberOfElements":3,
-                  "empty":false
-                }"""
-        ));
-    for (UserProfile singleEntity : createdProfiles) {
-      deleteEntity(singleEntity.getId());
-    }
-  }
-
-  @Test
-  @SneakyThrows
-  void shouldUpdateUserProfile() {
-    final var profile = new UserProfile();
-    profile.setEmail("foo@example.net");
-    profile.setActive(true);
-
-    var responseBody = createNewEntity(profile);
-
-    responseBody = getEntityById(responseBody.getId(), status().isOk());
-    responseBody.setActive(false);
-    responseBody = updateEntity(responseBody);
-    profile.setActive(false);
-
-    assertEntityEquals(profile, responseBody);
-    deleteEntity(responseBody.getId());
-  }
-
-  @Test
-  void shouldDeleteUserProfile() {
-    final var profile = new UserProfile();
-    profile.setEmail("bar@example.net");
-    profile.setActive(true);
-
-    var responseBody = createNewEntity(profile);
-
-    deleteEntity(responseBody.getId());
-    getEntityById(responseBody.getId(), status().isNotFound());
-  }
-
-  @SneakyThrows
-  private UserProfile createNewEntity(final UserProfile profile) {
-    final var gson = new Gson();
-
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/api/v1/user-profiles")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(gson.toJson(profile))
-            .accept(MediaType.APPLICATION_JSON))
+    mockMvc.perform(post("/api/v1/user-profiles").contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(userProfile)))
         .andExpect(status().isCreated())
-        .andReturn();
-
-    return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
+        .andDo(print());
   }
 
-  @SneakyThrows
-  private UserProfile updateEntity(final UserProfile profile) {
-    final var gson = new Gson();
-    final var id = profile.getId();
-    MvcResult result = mvc.perform(MockMvcRequestBuilders.put("/api/v1/user-profiles/" + id)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(gson.toJson(profile))
-            .accept(MediaType.APPLICATION_JSON))
+  @Test
+  void shouldReturnUserProfile() throws Exception {
+    long id = 1L;
+    UserProfile userProfile = new UserProfile(id, "i@example.com", true);
+
+    when(userProfileRepository.findById(id)).thenReturn(Optional.of(userProfile));
+    mockMvc.perform(get("/api/v1/user-profiles/{id}", id)).andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(id))
+        .andExpect(jsonPath("$.email").value(userProfile.getEmail()))
+        .andExpect(jsonPath("$.active").value(userProfile.isActive()))
+        .andDo(print());
+  }
+
+  @Test
+  void shouldReturnNotFoundUserProfile() throws Exception {
+    long id = 1L;
+
+    when(userProfileRepository.findById(id)).thenReturn(Optional.empty());
+    mockMvc.perform(get("/api/v1/user-profiles/{id}", id))
+        .andExpect(status().isNotFound())
+        .andDo(print());
+  }
+
+  @Test
+  void shouldReturnListOfUserProfiles() throws Exception {
+    List<UserProfile> userProfiles = new ArrayList<>(
+        Arrays.asList(new UserProfile(1L, "spring@example.com 1", true),
+            new UserProfile(2L, "spring@example.com 2", true),
+            new UserProfile(3L, "spring@example.com 3", true)));
+
+    when(userProfileRepository.findAll()).thenReturn(userProfiles);
+    mockMvc.perform(get("/api/v1/user-profiles"))
         .andExpect(status().isOk())
-        .andReturn();
-
-    return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
+        .andExpect(jsonPath("$.size()").value(userProfiles.size()))
+        .andDo(print());
   }
 
-  @SneakyThrows
-  private UserProfile getEntityById(final Long id, final ResultMatcher matcher) {
-    final var gson = new Gson();
+  @Test
+  void shouldReturnListOfUserProfilesWithFilter() throws Exception {
+    List<UserProfile> userProfiles = new ArrayList<>(
+        Arrays.asList(new UserProfile(1L, "spring@example.com", true),
+            new UserProfile(3L, "demo@example.com", true)));
 
-    final var result = mvc.perform(MockMvcRequestBuilders.get("/api/v1/user-profiles/" + id)
-            .accept(MediaType.APPLICATION_JSON))
-        .andExpect(matcher)
-        .andReturn();
+    String email = "example";
+    MultiValueMap<String, String> paramsMap = new LinkedMultiValueMap<>();
+    paramsMap.add("email", email);
 
-    return gson.fromJson(result.getResponse().getContentAsString(), UserProfile.class);
-  }
-
-  @SneakyThrows
-  private void deleteEntity(final Long id) {
-    mvc.perform(MockMvcRequestBuilders.delete("/api/v1/user-profiles/" + id)
-            .accept(MediaType.APPLICATION_JSON))
+    when(userProfileRepository.findByEmailContaining(email)).thenReturn(userProfiles);
+    mockMvc.perform(get("/api/v1/user-profiles").params(paramsMap))
         .andExpect(status().isOk())
-        .andReturn();
+        .andExpect(jsonPath("$.size()").value(userProfiles.size()))
+        .andDo(print());
   }
 
-  private void assertEntityEquals(final UserProfile profile, final UserProfile responseBody) {
-    assertNotNull(responseBody);
-    assertNotNull(responseBody.getId());
-    assertEquals(responseBody.isActive(), profile.isActive());
+  @Test
+  void shouldReturnNoContentWhenFilter() throws Exception {
+    String email = "coder@example.com";
+    MultiValueMap<String, String> paramsMap = new LinkedMultiValueMap<>();
+    paramsMap.add("email", email);
+
+    List<UserProfile> userProfiles = Collections.emptyList();
+
+    when(userProfileRepository.findByEmail(email)).thenReturn(userProfiles);
+    mockMvc.perform(get("/api/v1/user-profiles").params(paramsMap))
+        .andExpect(status().isNoContent())
+        .andDo(print());
   }
 
+  @Test
+  void shouldUpdateUserProfile() throws Exception {
+    long id = 1L;
+
+    UserProfile userProfile = new UserProfile(id, "spring@example.com", false);
+    UserProfile updateduserProfile = new UserProfile(id, "updated@example.com", true);
+
+    when(userProfileRepository.findById(id)).thenReturn(Optional.of(userProfile));
+    when(userProfileRepository.save(any(UserProfile.class))).thenReturn(updateduserProfile);
+
+    mockMvc.perform(put("/api/v1/user-profiles/{id}", id).contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(updateduserProfile)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.email").value(updateduserProfile.getEmail()))
+        .andExpect(jsonPath("$.active").value(updateduserProfile.isActive()))
+        .andDo(print());
+  }
+
+  @Test
+  void shouldReturnNotFoundUpdateUserProfile() throws Exception {
+    long id = 1L;
+
+    UserProfile updateduserProfile = new UserProfile(id, "updated@example.com", true);
+
+    when(userProfileRepository.findById(id)).thenReturn(Optional.empty());
+    when(userProfileRepository.save(any(UserProfile.class))).thenReturn(updateduserProfile);
+
+    mockMvc.perform(put("/api/v1/user-profiles/{id}", id).contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(updateduserProfile)))
+        .andExpect(status().isNotFound())
+        .andDo(print());
+  }
+
+  @Test
+  void shouldDeleteUserProfile() throws Exception {
+    long id = 1L;
+
+    doNothing().when(userProfileRepository).deleteById(id);
+    mockMvc.perform(delete("/api/v1/user-profiles/{id}", id))
+        .andExpect(status().isNoContent())
+        .andDo(print());
+  }
+
+  @Test
+  void shouldDeleteAllUserProfiles() throws Exception {
+    doNothing().when(userProfileRepository).deleteAll();
+    mockMvc.perform(delete("/api/v1/user-profiles"))
+        .andExpect(status().isNoContent())
+        .andDo(print());
+  }
 }

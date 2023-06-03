@@ -45,6 +45,11 @@ public class UserProfile {
 
   private boolean active;
 
+  public UserProfile(String email, boolean active) {
+    this.email = email;
+    this.active = active;
+  }
+
   @Override
   public String toString() {
     return "UserProfile{" +
