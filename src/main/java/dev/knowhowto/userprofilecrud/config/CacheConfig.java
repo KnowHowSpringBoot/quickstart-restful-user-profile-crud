@@ -1,4 +1,4 @@
-package org.ujar.userprofilecrud.config;
+package dev.knowhowto.userprofilecrud.config;
 
 import java.time.Duration;
 
@@ -7,12 +7,12 @@ import org.ehcache.config.builders.ExpiryPolicyBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.ehcache.jsr107.Eh107Configuration;
 import org.hibernate.cache.jcache.ConfigSettings;
+import org.iqkv.boot.cache.CacheProperties;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.ujar.boot.cache.CacheProperties;
 
 @Configuration
 @EnableCaching
@@ -45,7 +45,7 @@ class CacheConfig {
   @Bean
   JCacheManagerCustomizer cacheManagerCustomizer() {
     return cm -> {
-      createCache(cm, org.ujar.userprofilecrud.entity.UserProfile.class.getName());
+      createCache(cm, dev.knowhowto.userprofilecrud.entity.UserProfile.class.getName());
     };
   }
 

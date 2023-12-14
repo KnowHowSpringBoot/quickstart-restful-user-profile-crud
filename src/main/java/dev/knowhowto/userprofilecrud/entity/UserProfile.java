@@ -1,4 +1,4 @@
-package org.ujar.userprofilecrud.entity;
+package dev.knowhowto.userprofilecrud.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

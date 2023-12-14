@@ -1,4 +1,4 @@
-package org.ujar.userprofilecrud;
+package dev.knowhowto.userprofilecrud;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

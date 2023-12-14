@@ -27,7 +27,7 @@ This application is a [Spring Boot](https://spring.io/guides/gs/spring-boot) app
 using [Maven](https://spring.io/guides/gs/maven/). You can build a jar file and run it from the command line:
 
 ```
-git clone https://github.com/uJarOrg/quickstart-restful-user-profile-crud.git
+git clone https://github.com/KnowHowSpringBoot/quickstart-restful-user-profile-crud.git
 cd quickstart-restful-user-profile-crud
 ./mvnw package
 java -jar target/*.jar
@@ -46,7 +46,7 @@ Now you can access to the Swagger UI here: http://localhost:8080/swagger-ui.html
 1) On the command line
 
 ```
-git clone https://github.com/uJarOrg/quickstart-restful-user-profile-crud.git
+git clone https://github.com/KnowHowSpringBoot/quickstart-restful-user-profile-crud.git
 ```
 
 2) Inside IDE

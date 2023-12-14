@@ -1,11 +1,11 @@
-package org.ujar.userprofilecrud.repository;
+package dev.knowhowto.userprofilecrud.repository;
 
 import java.util.List;
 
+import dev.knowhowto.userprofilecrud.entity.UserProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
-import org.ujar.userprofilecrud.entity.UserProfile;
 
 @Repository
 public interface UserProfileRepository

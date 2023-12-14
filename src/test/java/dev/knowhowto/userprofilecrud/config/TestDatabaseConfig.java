@@ -1,4 +1,4 @@
-package org.ujar.userprofilecrud.config;
+package dev.knowhowto.userprofilecrud.config;
 
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

@@ -1,4 +1,4 @@
-package org.ujar.userprofilecrud.web;
+package dev.knowhowto.userprofilecrud.web;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.knowhowto.userprofilecrud.entity.UserProfile;
+import dev.knowhowto.userprofilecrud.repository.UserProfileRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -27,8 +29,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.ujar.userprofilecrud.entity.UserProfile;
-import org.ujar.userprofilecrud.repository.UserProfileRepository;
 
 @WebMvcTest(value = UserProfileResource.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 class UserProfileResourceTest {
