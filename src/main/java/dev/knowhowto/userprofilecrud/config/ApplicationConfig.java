@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories({"dev.knowhowto.userprofilecrud.repository"})
 @EnableJpaAuditing
 @EnableTransactionManagement
-@OpenAPIDefinition(info = @Info(title = "User Profile Management", version = "23.0.0"))
+@OpenAPIDefinition(info = @Info(title = "User Profile Management", version = "24.0.0"))
 class ApplicationConfig {
 
 }
