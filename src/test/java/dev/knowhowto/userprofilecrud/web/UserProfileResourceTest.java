@@ -128,16 +128,16 @@ class UserProfileResourceTest {
     long id = 1L;
 
     UserProfile userProfile = new UserProfile(id, "spring@example.com", false);
-    UserProfile updateduserProfile = new UserProfile(id, "updated@example.com", true);
+    UserProfile updatedUserProfile = new UserProfile(id, "updated@example.com", true);
 
     when(userProfileRepository.findById(id)).thenReturn(Optional.of(userProfile));
-    when(userProfileRepository.save(any(UserProfile.class))).thenReturn(updateduserProfile);
+    when(userProfileRepository.save(any(UserProfile.class))).thenReturn(updatedUserProfile);
 
     mockMvc.perform(put("/api/v1/user-profiles/{id}", id).contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(updateduserProfile)))
+            .content(objectMapper.writeValueAsString(updatedUserProfile)))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.email").value(updateduserProfile.getEmail()))
-        .andExpect(jsonPath("$.active").value(updateduserProfile.isActive()))
+        .andExpect(jsonPath("$.email").value(updatedUserProfile.getEmail()))
+        .andExpect(jsonPath("$.active").value(updatedUserProfile.isActive()))
         .andDo(print());
   }
 
@@ -145,13 +145,13 @@ class UserProfileResourceTest {
   void shouldReturnNotFoundUpdateUserProfile() throws Exception {
     long id = 1L;
 
-    UserProfile updateduserProfile = new UserProfile(id, "updated@example.com", true);
+    UserProfile updatedUserProfile = new UserProfile(id, "updated@example.com", true);
 
     when(userProfileRepository.findById(id)).thenReturn(Optional.empty());
-    when(userProfileRepository.save(any(UserProfile.class))).thenReturn(updateduserProfile);
+    when(userProfileRepository.save(any(UserProfile.class))).thenReturn(updatedUserProfile);
 
     mockMvc.perform(put("/api/v1/user-profiles/{id}", id).contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(updateduserProfile)))
+            .content(objectMapper.writeValueAsString(updatedUserProfile)))
         .andExpect(status().isNotFound())
         .andDo(print());
   }
